@@ -1,0 +1,83 @@
+/* Contenedor principal */
+.filtrosUnico_container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.filtrosUnico_container:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 640px) {
+  .filtrosUnico_container {
+    flex-direction: row;
+    gap: 32px;
+  }
+}
+
+.filtrosUnico_item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  padding: 10px;
+}
+
+.filtrosUnico_label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+  transition: color 0.3s ease;
+}
+
+.filtrosUnico_label:hover {
+  color: #3b82f6;
+}
+
+/* Inputs */
+.filtrosUnico_input,
+.filtrosUnico_select {
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #374151;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.filtrosUnico_input:hover,
+.filtrosUnico_select:hover {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.filtrosUnico_input:focus,
+.filtrosUnico_select:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+/* Responsividad móvil */
+@media (max-width: 639px) {
+  .filtrosUnico_container {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .filtrosUnico_item {
+    padding: 8px;
+  }
+}

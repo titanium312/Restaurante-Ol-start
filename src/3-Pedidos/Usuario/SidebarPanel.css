@@ -1,0 +1,107 @@
+/* SidebarPanel.css */
+
+.user-container {
+  position: relative;
+  display: inline-block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.user-button {
+  background-color: #4a90e2;
+  border: none;
+  color: white;
+  font-size: 1.6rem;
+  padding: 8px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 3px 8px rgba(74, 144, 226, 0.4);
+}
+
+.user-button:hover,
+.user-button:focus {
+  background-color: #357abd;
+  outline: none;
+  box-shadow: 0 0 10px #357abd;
+}
+
+.user-panel {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  width: 260px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  padding: 20px;
+  z-index: 1000;
+  animation: fadeInScale 0.25s ease forwards;
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.user-panel h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #333;
+  border-bottom: 2px solid #4a90e2;
+  padding-bottom: 6px;
+}
+
+.user-panel p {
+  margin: 8px 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.user-panel p strong {
+  color: #222;
+}
+
+.add-service-button,
+.logout-button {
+  display: block;
+  width: 100%;
+  background-color: #4a90e2;
+  border: none;
+  color: white;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 3px 8px rgba(74, 144, 226, 0.4);
+}
+
+.add-service-button:hover,
+.logout-button:hover,
+.add-service-button:focus,
+.logout-button:focus {
+  background-color: #357abd;
+  outline: none;
+  box-shadow: 0 0 12px #357abd;
+}
+
+/* Diferenciar botón Cerrar sesión */
+.logout-button {
+  background-color: #e94e4e;
+  box-shadow: 0 3px 8px rgba(233, 78, 78, 0.6);
+}
+
+.logout-button:hover,
+.logout-button:focus {
+  background-color: #c03939;
+  box-shadow: 0 0 12px #c03939;
+}

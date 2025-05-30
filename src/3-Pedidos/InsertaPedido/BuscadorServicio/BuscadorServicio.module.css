@@ -1,0 +1,65 @@
+.card {
+    position: relative;
+  }
+  
+  .searchInput {
+    width: 90%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    transition: border 0.3s ease;
+  }
+  
+  .searchInput:focus {
+    outline: none;
+    border-color: #5c6bc0;
+    background-color: #fff;
+  }
+  
+  /* Contenedor de resultados */
+  .serviceListWrapper {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    display: block;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999; /* Muy importante: asegúrate de que esté por encima de cualquier otra cosa */
+  }
+  
+  /* Lista de resultados */
+  .serviceList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Item individual */
+  .serviceItem {
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .serviceItem:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Cuando no hay resultados */
+  .noResultsMessage {
+    padding: 10px;
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+  }
+  

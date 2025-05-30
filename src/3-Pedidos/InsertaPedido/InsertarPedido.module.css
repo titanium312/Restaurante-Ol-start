@@ -1,0 +1,227 @@
+/* ========================================================================== */
+/* Contenedor Principal */
+/* ========================================================================== */
+.formularioContenedor {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  min-height: 100%;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  overflow-y: auto;
+  position: relative; /* Añadido para establecer contexto de apilamiento */
+}
+
+/* ========================================================================== */
+/* Título */
+/* ========================================================================== */
+.tituloFormulario {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* ========================================================================== */
+/* Buscador */
+/* ========================================================================== */
+.buscadorContenedor {
+  position: relative; /* Necesario para posicionar el resultado correctamente */
+  z-index: 1;
+}
+
+.resultadosBuscador {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  z-index: 1000; /* Asegura que se muestre por encima de la tabla */
+}
+
+/* ========================================================================== */
+/* Campos - Layout */
+/* ========================================================================== */
+.grillaCampos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+/* ========================================================================== */
+/* Entradas */
+/* ========================================================================== */
+.campoEntrada {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  font-size: 0.95rem;
+  transition: border 0.3s ease;
+}
+
+.campoEntrada:focus {
+  outline: none;
+  border-color: #5c6bc0;
+  background-color: #fff;
+}
+
+/* ========================================================================== */
+/* Botones */
+/* ========================================================================== */
+.botonAccion {
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: none;
+  background-color: #5c6bc0;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.botonAccion:hover {
+  background-color: #3f4b91;
+  transform: translateY(-1px);
+}
+
+.botonQuitarItem {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.botonQuitarItem:hover {
+  background-color: #dc2626;
+}
+
+/* ========================================================================== */
+/* Tabla */
+/* ========================================================================== */
+.tablaItemsScroll {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.tablaProductos {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.thTabla {
+  background-color: #f4f6f8;
+  color: #333;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10; /* Menor que el de los resultados del buscador */
+}
+
+.tdTabla {
+  padding: 0.65rem;
+  font-size: 0.9rem;
+  color: #444;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+/* ========================================================================== */
+/* Botones finales */
+/* ========================================================================== */
+.grupoBotonesAccion {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.grupoBotonesAccion .botonAccion {
+  flex: 1;
+  background-color: #10b981;
+}
+
+.grupoBotonesAccion .botonAccion:hover {
+  background-color: #059669;
+}
+
+/* ========================================================================== */
+/* Mensajes e info */
+/* ========================================================================== */
+.informacionFactura {
+  background-color: #e8f5e9;
+  color: #2f855a;
+  padding: 0.75rem;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.mensajeAlerta {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 0.75rem;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+/* ========================================================================== */
+/* Responsive */
+/* ========================================================================== */
+@media (max-width: 600px) {
+  .formularioContenedor {
+    padding: 1.25rem;
+  }
+
+  .tituloFormulario {
+    font-size: 1.3rem;
+  }
+
+  .campoEntrada,
+  .botonAccion {
+    font-size: 0.9rem;
+  }
+
+  .thTabla,
+  .tdTabla {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+}
+
+/* ========================================================================== */
+/* Scrollbar Custom */
+/* ========================================================================== */
+.tablaItemsScroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tablaItemsScroll::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.tablaItemsScroll::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}

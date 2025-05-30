@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crear Usuario</title>
+</head>
+<body>
+  <h1>Crear Usuario</h1>
+  <form id="userForm">
+    <label>
+      Nombre de usuario:
+      <input type="text" id="nombre_usuario" required />
+    </label><br/><br/>
+    <label>
+      Contraseña:
+      <input type="password" id="contraseña" required />
+    </label><br/><br/>
+    <label>
+      Correo electrónico:
+      <input type="email" id="correo_electronico" required />
+    </label><br/><br/>
+    <label>
+      ID Rol:
+      <input type="number" id="id_rol" min="1" required />
+    </label><br/><br/>
+    <button type="submit">Crear usuario</button>
+  </form>
+
+  <p id="resultado"></p>
+
+  <script>
+    document.getElementById('userForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      console.log("Formulario enviado");
+
+      const data = {
+        nombre_usuario: document.getElementById('nombre_usuario').value,
+        contraseña: document.getElementById('contraseña').value,
+        correo_electronico: document.getElementById('correo_electronico').value,
+        id_rol: Number(document.getElementById('id_rol').value)
+      };
+      console.log("Datos a enviar:", data);
+
+      try {
+        const response = await fetch('http://localhost:1234/User/usuarios', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        console.log("Respuesta recibida:", response);
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log("Resultado JSON:", result);
+          document.getElementById('resultado').textContent =
+            `${result.message} (ID de usuario: ${result.userId})`;
+        } else {
+          const errorText = await response.text();
+          console.log("Error respuesta:", errorText);
+          document.getElementById('resultado').textContent = 'Error: ' + errorText;
+        }
+      } catch (error) {
+        console.error("Error en fetch:", error);
+        document.getElementById('resultado').textContent = 'Error de conexión: ' + error.message;
+      }
+    });
+  </script>
+</body>
+</html>

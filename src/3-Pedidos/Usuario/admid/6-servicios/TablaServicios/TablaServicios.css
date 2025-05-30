@@ -1,0 +1,92 @@
+.tabla-servicios-wrapper {
+  max-width: 100%;
+  margin: 40px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.input-busqueda {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.tabla-scroll-container {
+  height: 300px; /* Muestra el encabezado + 5 filas */
+  overflow-y: scroll;
+  overflow-x: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+
+.tabla-servicios {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tabla-servicios thead {
+  background-color: #e6f0fa;
+  color: #1a3c6c;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tabla-servicios th,
+.tabla-servicios td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  background-color: white;
+}
+
+.tabla-servicios tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.tabla-servicios tbody tr:hover {
+  background-color: #f1f7ff;
+}
+
+.tabla-servicios button {
+  padding: 6px 12px;
+  margin-right: 6px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tabla-servicios button:first-of-type {
+  background-color: #d0e6ff;
+  color: #084c8d;
+}
+
+.tabla-servicios button:first-of-type:hover {
+  background-color: #b4d4f8;
+}
+
+.tabla-servicios button:last-of-type {
+  background-color: #fbe3e3;
+  color: #a82222;
+}
+
+.tabla-servicios button:last-of-type:hover {
+  background-color: #f5bcbc;
+}
+
+.tabla-servicios th,
+.tabla-servicios td {
+  padding: 10px 12px; /* compactar */
+  font-size: 0.9rem;
+}

@@ -1,0 +1,90 @@
+/* Login.css - Elegant Hotel Style */
+
+.login-container-unique {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), 
+              url('https://cdn.pixabay.com/photo/2016/11/17/09/28/hotel-1831072_1280.jpg') no-repeat center center;
+  background-size: cover;
+  font-family: 'Playfair Display', serif;
+}
+
+.login-card-unique {
+  width: 400px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  border-left: 4px solid #c8a97e;
+}
+
+h1.login-title-unique {
+  color: #273240;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-family: 'Playfair Display', serif;
+}
+
+.subtitle-unique {
+  color: #6b7280;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.form-group-unique {
+  margin-bottom: 24px;
+}
+
+label.login-label-unique {
+  display: block;
+  color: #4b5563;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+input.login-input-unique {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: all 0.3s;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+input.login-input-unique:focus {
+  outline: none;
+  border-color: #c8a97e;
+  box-shadow: 0 0 0 3px rgba(200, 169, 126, 0.2);
+}
+
+.sign-in-btn-unique {
+  width: 100%;
+  padding: 14px;
+  background: #c8a97e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 1px;
+  margin-top: 16px;
+}
+
+.sign-in-btn-unique:hover {
+  background: #b89a70;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(200, 169, 126, 0.4);
+}
+
+/* Add custom font import */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');

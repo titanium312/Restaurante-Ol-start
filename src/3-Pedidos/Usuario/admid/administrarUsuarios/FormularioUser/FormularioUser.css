@@ -1,0 +1,73 @@
+.formulario-usuario {
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formulario-usuario-titulo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.formulario-usuario-fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.formulario-usuario-label {
+  flex: 1 1 calc(50% - 10px);
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #2d3e50;
+}
+
+.formulario-usuario-input,
+.formulario-usuario-select {
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.formulario-usuario-input:focus,
+.formulario-usuario-select:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 4px rgba(74, 144, 226, 0.3);
+  outline: none;
+}
+
+.formulario-usuario-boton {
+
+  padding: 12px 20px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.formulario-usuario-boton:hover {
+  background-color: #357ab8;
+}
+
+@media (max-width: 768px) {
+  .formulario-usuario-label {
+    flex: 1 1 100%;
+  }
+}
