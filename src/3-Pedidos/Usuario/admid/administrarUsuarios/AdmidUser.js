@@ -33,9 +33,20 @@ function ContenedorUser() {
   const cargarUsuarios = async () => {
     try {
       const data = await api.obtenerDatos(`${apiBase}/usuarioslista`);
-      setUsuarios(data.usuarios);
+      if (!data || !Array.isArray(data.usuarios)) {
+        setUsuarios([]);
+        return;
+      }
+      const usuariosMapeados = data.usuarios.map((u) => ({
+        id: u.ID,
+        nombre_usuario: u.Nombre,
+        correo_electronico: u.Correo,
+        rol: u.Rol,
+      }));
+      setUsuarios(usuariosMapeados);
     } catch (err) {
       console.error("Error al cargar usuarios", err);
+      setUsuarios([]);
     }
   };
 
@@ -57,6 +68,7 @@ function ContenedorUser() {
         const payload = {
           nombre_usuario,
           nueva_contraseña: contraseña || undefined,
+          correo_electronico,
           id_rol: parseInt(id_rol),
         };
         await api.obtenerDatos(`${apiBase}/usuarios/Edit/${id}`, payload, "PUT");

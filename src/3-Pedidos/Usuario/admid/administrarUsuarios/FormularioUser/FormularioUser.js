@@ -1,3 +1,4 @@
+// FormularioUser.jsx
 import React from "react";
 import "./FormularioUser.css";
 
@@ -41,7 +42,7 @@ function FormularioUser({ formData, roles, handleChange, handleSubmit }) {
             id="contraseña"
             value={formData.contraseña}
             onChange={handleChange}
-            required
+            required={!formData.id}  // obligatorio solo si es creación
           />
         </label>
       </div>
@@ -78,7 +79,7 @@ function FormularioUser({ formData, roles, handleChange, handleSubmit }) {
       </div>
 
       <button className="formulario-usuario-boton" type="submit">
-        Guardar Usuario
+        {formData.id ? "Actualizar Usuario" : "Guardar Usuario"}
       </button>
     </form>
   );
