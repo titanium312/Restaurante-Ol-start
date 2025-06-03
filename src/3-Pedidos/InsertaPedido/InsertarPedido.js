@@ -15,7 +15,7 @@ function InsertarPedido({ onSubmit, mensaje }) {
   const [message, setMessage] = useState('');
 
   const userID = localStorage.getItem('userId');
-  const username = localStorage.getItem('username');
+  // Línea eliminada: const username = localStorage.getItem('username');
 
   const handleServiceSelect = (service) => {
     setIdServicio(service.ID_Servicio);

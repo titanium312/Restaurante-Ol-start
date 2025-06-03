@@ -47,7 +47,7 @@ function ContenedorUser() {
     e.preventDefault();
     const { id, nombre_usuario, contraseña, correo_electronico, id_rol } = formData;
 
-    if (!nombre_usuario || !contraseña || !id_rol) {
+    if (!nombre_usuario || !id_rol || (!contraseña && !id)) {
       alert("Faltan campos obligatorios");
       return;
     }
@@ -56,7 +56,7 @@ function ContenedorUser() {
       if (id) {
         const payload = {
           nombre_usuario,
-          nueva_contraseña: contraseña,
+          nueva_contraseña: contraseña || undefined,
           id_rol: parseInt(id_rol),
         };
         await api.obtenerDatos(`${apiBase}/usuarios/Edit/${id}`, payload, "PUT");
