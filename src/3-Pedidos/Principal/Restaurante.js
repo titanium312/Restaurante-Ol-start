@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';  // <-- quité useEffect
 import styles from './Restaurante.module.css';
 import InsertarPedido from '../InsertaPedido/InsertarPedido';
 import ListaRestaurante from '../Lista/ListaRestaurante';
