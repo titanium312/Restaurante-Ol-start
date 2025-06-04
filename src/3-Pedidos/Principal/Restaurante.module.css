@@ -185,3 +185,116 @@
 .restauranteContent > * {
   animation: fadeIn 0.5s ease forwards;
 }
+
+
+/* -------------------------------------------------------------*/
+
+
+
+/* ===== Responsive Completo para Restaurante ===== */
+
+/* Para tablets y pantallas medianas (hasta 1024px) */
+@media (max-width: 1024px) {
+  .restauranteContainer {
+    max-width: 95%;
+    height: auto; /* Que crezca con el contenido */
+    margin: 1rem auto;
+    border-radius: 0.5rem;
+  }
+
+  .restauranteNavbar {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .restauranteBtnNav {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    flex: 1 1 45%; /* Que los botones ocupen casi mitad del ancho y se ajusten */
+    max-width: 220px;
+  }
+
+  .restauranteContent {
+    padding: 1rem;
+  }
+
+  .restauranteTitle {
+    font-size: 1.35rem;
+  }
+}
+
+/* Para dispositivos móviles medianos (hasta 768px) */
+@media (max-width: 768px) {
+  .restauranteContainer {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .restauranteNavbar {
+    flex-direction: column;
+    padding: 0.5rem 1rem;
+  }
+
+  .restauranteBtnNav {
+    width: 100%;
+    max-width: none;
+    padding: 0.6rem 0;
+    font-size: 1rem;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  .restauranteBtnNavActive {
+    transform: none; /* Eliminar translate para que no se mueva en móvil */
+  }
+
+  .restauranteContent {
+    padding: 1rem 0.75rem;
+  }
+
+  .restauranteTitle {
+    font-size: 1.2rem;
+  }
+
+  .restauranteDescription {
+    font-size: 0.9rem;
+    padding: 0 0.5rem;
+  }
+}
+
+/* Para móviles pequeños (hasta 480px) */
+@media (max-width: 480px) {
+  .restauranteBtnNav {
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+  }
+
+  .restauranteContent {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .restauranteTitle {
+    font-size: 1.1rem;
+  }
+
+  .restauranteDescription {
+    font-size: 0.85rem;
+  }
+}
+
+/* Para pantallas muy grandes (más de 1400px) */
+@media (min-width: 1400px) {
+  .restauranteContainer {
+    max-width: 1400px;
+  }
+
+  .restauranteBtnNav {
+    max-width: 250px;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+  }
+}
