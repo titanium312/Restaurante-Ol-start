@@ -1,0 +1,190 @@
+/* Contenedor principal */
+.portada-container {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Fondo blanco con transparencia y degradado dorado sutil */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(245, 238, 224, 0.8) 100%
+  );
+  position: relative;
+  overflow: hidden;
+  padding: 2rem;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Efecto de partículas doradas de fondo */
+.portada-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 40%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+  animation: floatParticles 30s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes floatParticles {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Contenido centrado */
+.portada-content {
+  z-index: 1;
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+  animation: fadeInUp 1.2s ease-out;
+  padding: 1rem;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Título elegante */
+.portada-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  color: #4a3c1b; /* tono dorado oscuro */
+  margin-bottom: 1.2rem;
+  text-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+  position: relative;
+  animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+  from {
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  }
+  to {
+    text-shadow: 
+      0 0 20px rgba(212, 175, 55, 0.5),
+      0 0 40px rgba(212, 175, 55, 0.3);
+  }
+}
+
+/* Estrellas decorativas */
+.portada-title::before,
+.portada-title::after {
+  content: '✦';
+  font-size: 1.5rem;
+  color: #d4af37;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: sparkle 2s ease-in-out infinite alternate;
+}
+
+.portada-title::before {
+  left: -2rem;
+  animation-delay: 0.5s;
+}
+.portada-title::after {
+  right: -2rem;
+  animation-delay: 1s;
+}
+
+@keyframes sparkle {
+  0% { opacity: 0.3; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Línea dorada decorativa */
+.decorative-line {
+  width: 120px;
+  height: 3px;
+  margin: 2rem auto;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  position: relative;
+  animation: lineExpand 2s ease-out;
+}
+
+@keyframes lineExpand {
+  from { width: 0; }
+  to { width: 120px; }
+}
+
+.decorative-line::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background: #d4af37;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+}
+
+/* Subtítulo fino */
+.portada-subtitle {
+  font-size: 1.25rem;
+  color: #6e5c2b;
+  line-height: 1.6;
+  font-weight: 300;
+  animation: fadeIn 1.5s ease-out 0.5s both;
+  letter-spacing: 0.6px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Botón elegante (opcional) */
+.elegant-button {
+  margin-top: 2rem;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #d4af37, #f4e29b);
+  color: #1a1a1a;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+  transition: all 0.3s ease;
+}
+
+.elegant-button:hover {
+  background: linear-gradient(135deg, #f4e29b, #d4af37);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.5);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .portada-title::before,
+  .portada-title::after {
+    display: none;
+  }
+
+  .decorative-line {
+    width: 80px;
+  }
+
+  .portada-subtitle {
+    font-size: 1.1rem;
+  }
+}
