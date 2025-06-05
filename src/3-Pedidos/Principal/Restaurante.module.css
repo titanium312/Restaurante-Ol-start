@@ -1,8 +1,8 @@
 /* Contenedor principal */
 .restauranteContainer {
-  max-width: 1200px; /* Ajuste para que sea más compacto */
+  max-width: 1200px;
   width: 100%;
-  height: 98vh; /* Ocupa toda la pantalla */
+  min-height: 100vh;
   margin: 0 auto;
   border: none;
   border-radius: 0.75rem;
@@ -11,6 +11,7 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: #ffffff;
   transition: all 0.3s ease;
+  display: flex;
   flex-direction: column;
 }
 
@@ -32,20 +33,18 @@
   flex-shrink: 0;
 }
 
-/* Colores para la navbar */
+/* Colores navbar */
 .restauranteNavbarBlue {
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
 }
-
 .restauranteNavbarGreen {
   background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
 }
-
 .restauranteNavbarIndigo {
   background: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #4338ca 100%);
 }
 
-/* Botones de navegación */
+/* Botones navbar */
 .restauranteBtnNav {
   background: rgba(255, 255, 255, 0.08);
   color: white;
@@ -71,7 +70,6 @@
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
   transition: all 0.6s ease;
 }
-
 .restauranteBtnNav:hover::before {
   left: 100%;
 }
@@ -81,11 +79,9 @@
   border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-1px);
 }
-
 .restauranteBtnNav:hover:not(.restauranteBtnNavActive) {
   background: rgba(255, 255, 255, 0.15);
 }
-
 .restauranteBtnNav:active {
   transform: translateY(1px);
 }
@@ -93,8 +89,9 @@
 /* Contenido principal */
 .restauranteContent {
   flex: 1;
+  width: 100%;
   padding: 1rem 1.5rem;
-  overflow: hidden;
+  overflow-y: auto;
   opacity: 0;
   transform: translateY(15px);
   transition: opacity 0.4s ease, transform 0.4s ease;
@@ -103,8 +100,6 @@
   justify-content: center;
   align-items: center;
 }
-
-/* Mostrar contenido */
 .restauranteContentShow {
   opacity: 1;
   transform: translateY(0);
@@ -120,7 +115,6 @@
   position: relative;
   padding-bottom: 0.5rem;
 }
-
 .restauranteTitle::after {
   content: '';
   position: absolute;
@@ -144,33 +138,7 @@
   padding: 0 1rem;
 }
 
-/* Responsive */
-@media (max-width: 640px) {
-  .restauranteNavbar {
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.75rem;
-  }
-
-  .restauranteBtnNav {
-    width: 100%;
-    text-align: center;
-  }
-
-  .restauranteContent {
-    padding: 1rem;
-  }
-
-  .restauranteTitle {
-    font-size: 1.25rem;
-  }
-
-  .restauranteDescription {
-    font-size: 0.95rem;
-  }
-}
-
-/* Animación al mostrar contenido */
+/* Fade-in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -181,23 +149,17 @@
     transform: translateY(0);
   }
 }
-
 .restauranteContent > * {
   animation: fadeIn 0.5s ease forwards;
 }
 
+/* ======================== RESPONSIVE ======================== */
 
-/* -------------------------------------------------------------*/
-
-
-
-/* ===== Responsive Completo para Restaurante ===== */
-
-/* Para tablets y pantallas medianas (hasta 1024px) */
+/* Tablets (<=1024px) */
 @media (max-width: 1024px) {
   .restauranteContainer {
     max-width: 95%;
-    height: auto; /* Que crezca con el contenido */
+    min-height: 100vh;
     margin: 1rem auto;
     border-radius: 0.5rem;
   }
@@ -212,7 +174,7 @@
   .restauranteBtnNav {
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
-    flex: 1 1 45%; /* Que los botones ocupen casi mitad del ancho y se ajusten */
+    flex: 1 1 45%;
     max-width: 220px;
   }
 
@@ -225,11 +187,11 @@
   }
 }
 
-/* Para dispositivos móviles medianos (hasta 768px) */
+/* Móviles medianos (<=768px) */
 @media (max-width: 768px) {
   .restauranteContainer {
     max-width: 100%;
-    height: auto;
+    min-height: 100vh;
     border-radius: 0;
     box-shadow: none;
   }
@@ -249,7 +211,7 @@
   }
 
   .restauranteBtnNavActive {
-    transform: none; /* Eliminar translate para que no se mueva en móvil */
+    transform: none;
   }
 
   .restauranteContent {
@@ -266,7 +228,7 @@
   }
 }
 
-/* Para móviles pequeños (hasta 480px) */
+/* Móviles pequeños (<=480px) */
 @media (max-width: 480px) {
   .restauranteBtnNav {
     font-size: 0.9rem;
@@ -286,7 +248,7 @@
   }
 }
 
-/* Para pantallas muy grandes (más de 1400px) */
+/* Pantallas muy grandes (>=1400px) */
 @media (min-width: 1400px) {
   .restauranteContainer {
     max-width: 1400px;
@@ -297,4 +259,13 @@
     font-size: 1rem;
     padding: 0.75rem 1.5rem;
   }
+}
+
+/* Ajustes universales */
+* {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+html {
+  scroll-behavior: smooth;
 }
