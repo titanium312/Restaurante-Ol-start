@@ -107,7 +107,14 @@ function InsertarPedido({ onSubmit, mensaje }) {
           value={nombreProducto}
           onChange={(e) => setNombreProducto(e.target.value)}
         />
-        <button className={styles.botonAccion} onClick={agregarItem}>Agregar</button>
+                <input
+          id="mesa"
+          type="text"
+          className={styles.campoEntrada}
+          placeholder="Mesa"
+          value={mesa}
+          onChange={(e) => setMesa(e.target.value)}
+        />
       </div>
 
       <div className={styles.grillaCampos}>
@@ -127,14 +134,9 @@ function InsertarPedido({ onSubmit, mensaje }) {
           value={precio}
           readOnly
         />
-        <input
-          id="mesa"
-          type="text"
-          className={styles.campoEntrada}
-          placeholder="Mesa"
-          value={mesa}
-          onChange={(e) => setMesa(e.target.value)}
-        />
+
+        <button className={styles.botonAccion} onClick={agregarItem}>Agregar</button>
+
       </div>
 
       <div className={styles.tablaItemsScroll}>
