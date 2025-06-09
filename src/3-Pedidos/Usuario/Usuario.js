@@ -6,16 +6,13 @@ const Usuario = ({ changeContent }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  // Obtener los datos del usuario desde localStorage
   const username = localStorage.getItem('username');
   const role = localStorage.getItem('role');
 
-  // Función para cerrar sesión
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('username');
     localStorage.removeItem('role');
-
     navigate('/');
   };
 
@@ -36,7 +33,6 @@ const Usuario = ({ changeContent }) => {
               <p><strong>Nombre:</strong> {username}</p>
               <p><strong>Rol:</strong> {role}</p>
 
-              {/* Mostrar botones solo si es Editor o Administrador */}
               {(role === 'Editor' || role === 'Administrador') && (
                 <>
                   <button 
@@ -47,6 +43,7 @@ const Usuario = ({ changeContent }) => {
                   >
                     Agregar Servicio
                   </button>
+
                   {role === 'Administrador' && (
                     <button
                       id="administrarUsuarios-btn"

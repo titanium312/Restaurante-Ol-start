@@ -11,7 +11,7 @@ const TablaServicios = ({ servicios, editarServicio, eliminarServicio }) => {
   );
 
   return (
-    <div className="tabla-servicios-wrapper">
+    <div className="table-wrapper">
       <input
         type="text"
         placeholder="Buscar por nombre, descripción, tipo o costo..."
@@ -20,7 +20,7 @@ const TablaServicios = ({ servicios, editarServicio, eliminarServicio }) => {
         className="input-busqueda"
       />
 
-      <div className="tabla-scroll-container">
+      <div className="scroll-container">
         <table className="tabla-servicios">
           <thead>
             <tr>
@@ -41,8 +41,8 @@ const TablaServicios = ({ servicios, editarServicio, eliminarServicio }) => {
                 <td>${s.Precio}</td>
                 <td>{s.Tipo_Servicio}</td>
                 <td>
-                  <button onClick={() => editarServicio(s)}>Editar</button>
-                  <button onClick={() => eliminarServicio(s.ID_Servicio)}>Eliminar</button>
+                  <button className="btn-editar" onClick={() => editarServicio(s)}>Editar</button>
+                  <button className="btn-eliminar" onClick={() => eliminarServicio(s.ID_Servicio)}>Eliminar</button>
                 </td>
               </tr>
             ))}
@@ -53,9 +53,6 @@ const TablaServicios = ({ servicios, editarServicio, eliminarServicio }) => {
   );
 };
 
-
-
-
 const mockServicios = Array.from({ length: 28 }, (_, i) => ({
   ID_Servicio: i + 1,
   Nombre: `Servicio ${i + 1}`,
@@ -63,6 +60,5 @@ const mockServicios = Array.from({ length: 28 }, (_, i) => ({
   Precio: (Math.random() * 100).toFixed(2),
   Tipo_Servicio: i % 2 === 0 ? "Básico" : "Premium",
 })).slice(3); // Esto elimina los primeros 3 (empieza desde la fila 4)
-
 
 export { TablaServicios, mockServicios };

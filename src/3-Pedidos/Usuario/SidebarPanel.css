@@ -1,11 +1,14 @@
 /* SidebarPanel.css */
 
+/* Contenedor del usuario */
 .user-container {
   position: relative;
   display: inline-block;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 1001; /* Asegura que esté encima de otros elementos */
 }
 
+/* Botón de usuario */
 .user-button {
   background-color: #4a90e2;
   border: none;
@@ -25,19 +28,23 @@
   box-shadow: 0 0 10px #357abd;
 }
 
+/* Panel de usuario */
 .user-panel {
   position: absolute;
   top: 45px;
   right: 0;
-  width: 260px;
+  width: 260px;  /* Ancho fijo */
+  max-width: 90vw;  /* Ajuste para pantallas pequeñas */
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   padding: 20px;
   z-index: 1000;
   animation: fadeInScale 0.25s ease forwards;
+  overflow-y: auto;  /* Desplazamiento si el contenido excede el tamaño del panel */
 }
 
+/* Animación de apertura del panel */
 @keyframes fadeInScale {
   0% {
     opacity: 0;
@@ -49,6 +56,7 @@
   }
 }
 
+/* Estilo del título dentro del panel */
 .user-panel h4 {
   margin-top: 0;
   margin-bottom: 15px;
@@ -59,6 +67,7 @@
   padding-bottom: 6px;
 }
 
+/* Estilo de los párrafos dentro del panel */
 .user-panel p {
   margin: 8px 0;
   color: #555;
@@ -69,6 +78,7 @@
   color: #222;
 }
 
+/* Botones dentro del panel */
 .add-service-button,
 .logout-button {
   display: block;
@@ -85,6 +95,7 @@
   box-shadow: 0 3px 8px rgba(74, 144, 226, 0.4);
 }
 
+/* Efectos de hover y focus para los botones */
 .add-service-button:hover,
 .logout-button:hover,
 .add-service-button:focus,
@@ -94,7 +105,7 @@
   box-shadow: 0 0 12px #357abd;
 }
 
-/* Diferenciar botón Cerrar sesión */
+/* Estilo específico para el botón de cerrar sesión */
 .logout-button {
   background-color: #e94e4e;
   box-shadow: 0 3px 8px rgba(233, 78, 78, 0.6);
@@ -104,4 +115,21 @@
 .logout-button:focus {
   background-color: #c03939;
   box-shadow: 0 0 12px #c03939;
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 600px) {
+  /* Ajuste para el panel en pantallas pequeñas */
+  .user-panel {
+    width: 90vw;  /* 90% del ancho de la pantalla */
+    max-width: 300px;  /* Límite de tamaño en pantallas pequeñas */
+    top: 50px;
+    right: 5%;  /* Márgenes laterales para no pegar al borde */
+    padding: 15px;
+  }
+
+  /* Ajuste de tamaño del botón */
+  .user-button {
+    font-size: 1.3rem;
+  }
 }
