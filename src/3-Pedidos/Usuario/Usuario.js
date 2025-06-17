@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const Usuario = ({ changeContent }) => {
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef(null);
+  const buttonRef = useRef(null); // Ref para el botón
   const navigate = useNavigate();
 
   const username = localStorage.getItem('username');
@@ -19,10 +20,16 @@ const Usuario = ({ changeContent }) => {
 
   const togglePanel = () => setIsOpen(!isOpen);
 
-  // Cierra el panel si se hace clic fuera de él
+  // Cierra el panel si se hace clic fuera del panel Y fuera del botón
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (panelRef.current && !panelRef.current.contains(event.target)) {
+      // Si el click no es ni en el panel ni en el botón, cerramos el panel
+      if (
+        panelRef.current &&
+        !panelRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target)
+      ) {
         setIsOpen(false);
       }
     };
@@ -38,7 +45,12 @@ const Usuario = ({ changeContent }) => {
 
   return (
     <div className="user-container">
-      <button onClick={togglePanel} className="user-button" aria-label="Usuario">
+      <button
+        ref={buttonRef}  // Asignamos el ref al botón
+        onClick={togglePanel}
+        className="user-button"
+        aria-label="Usuario"
+      >
         👤
       </button>
 
@@ -59,7 +71,7 @@ const Usuario = ({ changeContent }) => {
 
               {(role === 'Editor' || role === 'Administrador') && (
                 <>
-                  <button 
+                  <button
                     id="agregarServicios-btn"
                     onClick={() => changeContent('Agregar Servicio')}
                     className="add-service-button"
