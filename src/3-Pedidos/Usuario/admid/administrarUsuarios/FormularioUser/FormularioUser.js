@@ -3,8 +3,35 @@ import React from "react";
 import "./FormularioUser.css";
 
 function FormularioUser({ formData, roles, handleChange, handleSubmit }) {
+  // Envolvemos el handleSubmit para limpiar espacios antes de llamar al original
+  const handleSubmitClean = (e) => {
+    e.preventDefault();
+
+    // Limpiar espacios al inicio y final en campos relevantes
+    const cleanedFormData = {
+      ...formData,
+      nombre_usuario: formData.nombre_usuario.trim(),
+      telefono: formData.telefono ? formData.telefono.trim() : "",
+      // Puedes agregar más campos aquí si quieres limpiar espacios
+    };
+
+    // Validación: que nombre_usuario no quede vacío
+    if (!cleanedFormData.nombre_usuario) {
+      alert("El nombre de usuario no puede estar vacío o solo contener espacios.");
+      return;
+    }
+
+    // Llamamos a la función handleSubmit original pasando cleanedFormData
+    // Pero para que funcione con la estructura actual, puedes pasar cleanedFormData
+    // como argumento. Si tu handleSubmit no acepta parámetros, la otra opción
+    // es actualizar formData directamente antes de submit.
+
+    // Aquí asumimos que handleSubmit acepta cleanedFormData
+    handleSubmit(e, cleanedFormData);
+  };
+
   return (
-    <form className="formulario-usuario" onSubmit={handleSubmit}>
+    <form className="formulario-usuario" onSubmit={handleSubmitClean}>
 
       {formData.id && (
         <div className="formulario-usuario-fila">
@@ -49,12 +76,12 @@ function FormularioUser({ formData, roles, handleChange, handleSubmit }) {
 
       <div className="formulario-usuario-fila">
         <label className="formulario-usuario-label">
-          Correo Electrónico:
+          Teléfono:
           <input
             className="formulario-usuario-input"
-            type="email"
-            id="correo_electronico"
-            value={formData.correo_electronico}
+            type="tel"
+            id="telefono"
+            value={formData.telefono || ""}
             onChange={handleChange}
           />
         </label>

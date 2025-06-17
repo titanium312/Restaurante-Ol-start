@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './SidebarPanel.css';
 import { useNavigate } from 'react-router-dom';
 
 const Usuario = ({ changeContent }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const panelRef = useRef(null);
   const navigate = useNavigate();
 
   const username = localStorage.getItem('username');
@@ -18,6 +19,23 @@ const Usuario = ({ changeContent }) => {
 
   const togglePanel = () => setIsOpen(!isOpen);
 
+  // Cierra el panel si se hace clic fuera de él
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (panelRef.current && !panelRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
     <div className="user-container">
       <button onClick={togglePanel} className="user-button" aria-label="Usuario">
@@ -25,7 +43,13 @@ const Usuario = ({ changeContent }) => {
       </button>
 
       {isOpen && (
-        <div className="user-panel" role="dialog" aria-modal="true" aria-labelledby="userPanelTitle">
+        <div
+          ref={panelRef}
+          className="user-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="userPanelTitle"
+        >
           <h4 id="userPanelTitle">Usuario</h4>
 
           {username ? (

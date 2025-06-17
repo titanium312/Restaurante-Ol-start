@@ -7,7 +7,7 @@ const api = {
 
     const config = {
       method: httpMethod,
-      url: `https://hotel-production-758e.up.railway.app${endpoint}`,
+      url: `repo-eliimi-production.up.railway.app${endpoint}`,
       ...(data && { data }),
     };
 

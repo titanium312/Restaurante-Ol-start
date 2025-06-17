@@ -1,19 +1,32 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Restaurante from "./3-Pedidos/Principal/Restaurante";
-import Login from "./Loguin/Login";
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './Loguin/Login'; // Asegúrate de que esta ruta coincida
+import Restaurante from './3-Pedidos/Principal/Restaurante'; // Ruta protegida
+
+// Componente de ruta protegida
+const PrivateRoute = ({ children }) => {
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  return isLoggedIn === 'true' ? children : <Navigate to="/" replace />;
+};
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Routes>
-          {/* Ruta para Login */}
-          <Route path="/" element={<Login />} />
-          
-          {/* Ruta para Restaurante */}
-          <Route path="/restaurante" element={<Restaurante />} />
-        </Routes>
-      </div>
+      <Routes>
+        {/* Ruta pública: login */}
+        <Route path="/" element={<Login />} />
+
+        {/* Ruta protegida */}
+        <Route
+          path="/restaurante"
+          element={
+            <PrivateRoute>
+              <Restaurante />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
     </Router>
   );
 }

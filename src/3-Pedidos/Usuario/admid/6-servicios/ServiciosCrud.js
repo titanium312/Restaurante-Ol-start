@@ -87,7 +87,7 @@ const ServiciosCrud = () => {
         cargarServicios();
       } catch (error) {
         console.error('Error al eliminar servicio:', error.message);
-        alert('Error al eliminar el servicio.');
+        alert('Error al eliminar el servicio. Tal vez este ya facturada este servicio');
       }
     }
   };

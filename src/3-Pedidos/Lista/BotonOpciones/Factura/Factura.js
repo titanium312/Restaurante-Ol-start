@@ -175,7 +175,7 @@ export function useFactura({
                 <div>Dirección: calle 10 #1-52 <br> brr centro</div>
                 <div>Teléfono: 3024183952</div>
                 <div>Resolución POS</div>
-                <div>Responsabilidad ante la DIAN</div>
+                <div>Responsabilidad ante DIAN</div>
               </div>
               <p><strong>N° Factura:</strong> ${facturaId}</p>
               <p><strong>Fecha:</strong> ${fechaFormateada}</p>
@@ -202,7 +202,9 @@ export function useFactura({
                 </tbody>
               </table>
               <h3 class="total">Total: $${formatoPrecio(totalFactura)}</h3>
-              <div class="footer">Gracias por su preferencia</div>
+              <div class="footer">La propina voluntaria.</div>
+              <div class="footer">¡Gracias por elegirnos! Esperamos verte pronto.</div>
+              <br><br>
             </div>
           </div>
           <script>

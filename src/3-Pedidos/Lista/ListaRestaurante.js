@@ -5,6 +5,9 @@ import api from '../../api';
 import {TablaServicios,mockServicios} from './TablaServicios/TablaServicios';
 
 function ListaRestaurante() {
+  // Fecha de hoy en formato YYYY-MM-DD para el filtro inicial
+  const hoy = new Date().toISOString().split('T')[0];
+
   const [servicios, setServicios] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -15,7 +18,7 @@ function ListaRestaurante() {
     precioUnitario: '',
     total: '',
     estadoServicio: '',
-    fechaInicial: '',
+    fechaInicial: hoy,   // Aquí fecha de hoy por defecto
     fechaFinal: '',
     mesa: '',
     nombreUsuarioFactura: '',
@@ -90,7 +93,7 @@ function ListaRestaurante() {
 
       <div className={styles.tablaWrapper}>
         <TablaServicios
-           servicios={mockServicios}
+          servicios={mockServicios}
           groupedServicios={groupedServicios}
           obtenerServiciosPendientes={obtenerServiciosPendientes}
         />

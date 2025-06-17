@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import FormularioUser from "./FormularioUser/FormularioUser";
 import { TablaUser } from "./TablaUser/TablaUser";
-import api from "../../../../api"; // Ajusta la ruta si es necesario
+import api from "../../../../api";
 
 function ContenedorUser() {
   const [usuarios, setUsuarios] = useState([]);
@@ -10,7 +10,7 @@ function ContenedorUser() {
     id: "",
     nombre_usuario: "",
     contraseña: "",
-    correo_electronico: "",
+    telefono: "",
     id_rol: "",
   });
 
@@ -33,16 +33,20 @@ function ContenedorUser() {
   const cargarUsuarios = async () => {
     try {
       const data = await api.obtenerDatos(`${apiBase}/usuarioslista`);
+      console.log("Usuarios recibidos:", data);
+
       if (!data || !Array.isArray(data.usuarios)) {
         setUsuarios([]);
         return;
       }
+
       const usuariosMapeados = data.usuarios.map((u) => ({
-        id: u.ID,
-        nombre_usuario: u.Nombre,
-        correo_electronico: u.Correo,
-        rol: u.Rol,
+        id: u.id,
+        nombre_usuario: u.nombre_usuario,
+        rol: u.rol,
+        telefono: u.telefono || "",
       }));
+
       setUsuarios(usuariosMapeados);
     } catch (err) {
       console.error("Error al cargar usuarios", err);
@@ -54,47 +58,49 @@ function ContenedorUser() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { id, nombre_usuario, contraseña, correo_electronico, id_rol } = formData;
+const handleSubmit = async (e, cleanedFormData) => {
+  e.preventDefault();
 
-    if (!nombre_usuario || !id_rol || (!contraseña && !id)) {
-      alert("Faltan campos obligatorios");
-      return;
+  // Usa cleanedFormData en vez de formData para enviar
+  const { id, nombre_usuario, contraseña, correo_electronico, id_rol, telefono } = cleanedFormData;
+
+  if (!nombre_usuario || !id_rol || (!contraseña && !id)) {
+    alert("Faltan campos obligatorios");
+    return;
+  }
+
+  try {
+    const payload = {
+      nombre_usuario,
+      correo_electronico,
+      telefono,
+      id_rol: parseInt(id_rol),
+    };
+
+    if (contraseña) {
+      payload.contraseña = contraseña;
     }
 
-    try {
-      if (id) {
-        const payload = {
-          nombre_usuario,
-          nueva_contraseña: contraseña || undefined,
-          correo_electronico,
-          id_rol: parseInt(id_rol),
-        };
-        await api.obtenerDatos(`${apiBase}/usuarios/Edit/${id}`, payload, "PUT");
-      } else {
-        const payload = {
-          nombre_usuario,
-          contraseña,
-          correo_electronico,
-          id_rol: parseInt(id_rol),
-        };
-        await api.obtenerDatos(`${apiBase}/usuarios`, payload, "POST");
-      }
-      resetForm();
-      await cargarUsuarios();
-    } catch (err) {
-      console.error("Error al guardar usuario", err);
-      alert("Error al guardar usuario");
+    if (id) {
+      await api.obtenerDatos(`${apiBase}/usuarios/Edit/${id}`, payload, "PUT");
+    } else {
+      await api.obtenerDatos(`${apiBase}/usuarios`, payload, "POST");
     }
-  };
+
+    resetForm();
+    await cargarUsuarios();
+  } catch (err) {
+    console.error("Error al guardar usuario", err);
+    alert("Error al guardar usuario");
+  }
+};
 
   const resetForm = () => {
     setFormData({
       id: "",
       nombre_usuario: "",
       contraseña: "",
-      correo_electronico: "",
+      telefono: "",
       id_rol: "",
     });
   };
@@ -105,7 +111,7 @@ function ContenedorUser() {
       id: usuario.id,
       nombre_usuario: usuario.nombre_usuario,
       contraseña: "",
-      correo_electronico: usuario.correo_electronico || "",
+      telefono: usuario.telefono || "",
       id_rol: rolEncontrado ? rolEncontrado.id.toString() : "",
     });
   };

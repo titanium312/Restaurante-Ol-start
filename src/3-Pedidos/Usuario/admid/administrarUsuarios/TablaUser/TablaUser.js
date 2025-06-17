@@ -5,7 +5,7 @@ function TablaUser({ usuarios, handleEditar, handleEliminar }) {
   const [filtro, setFiltro] = useState("");
 
   const usuariosFiltrados = usuarios.filter((u) =>
-    `${u.nombre_usuario} ${u.correo_electronico || ""} ${u.rol || ""}`
+    `${u.nombre_usuario} ${u.telefono || ""} ${u.rol || ""}`
       .toLowerCase()
       .includes(filtro.toLowerCase())
   );
@@ -14,7 +14,7 @@ function TablaUser({ usuarios, handleEditar, handleEliminar }) {
     <div className="table-wrapper">
       <input
         type="text"
-        placeholder="Buscar por nombre, correo o rol..."
+        placeholder="Buscar por nombre, teléfono o rol..."
         value={filtro}
         onChange={(e) => setFiltro(e.target.value)}
         className="input-busqueda"
@@ -29,7 +29,7 @@ function TablaUser({ usuarios, handleEditar, handleEliminar }) {
               <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Correo</th>
+                <th>Teléfono</th>
                 <th>Rol</th>
                 <th>Acciones</th>
               </tr>
@@ -39,7 +39,7 @@ function TablaUser({ usuarios, handleEditar, handleEliminar }) {
                 <tr key={u.id}>
                   <td>{u.id}</td>
                   <td>{u.nombre_usuario}</td>
-                  <td>{u.correo_electronico || ""}</td>
+                  <td>{u.telefono || ""}</td>
                   <td>{u.rol || "Sin rol"}</td>
                   <td>
                     <button className="btn-editar" onClick={() => handleEditar(u)}>

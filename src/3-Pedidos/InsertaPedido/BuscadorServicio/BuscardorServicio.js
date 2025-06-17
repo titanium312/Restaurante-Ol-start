@@ -7,7 +7,6 @@ const BuscadorServicio = ({ onSelect, searchTerm, setSearchTerm }) => {
   const [filteredServices, setFilteredServices] = useState([]);
   const [showList, setShowList] = useState(false);
 
-  // 🔄 Usar API genérica en lugar de fetch
   const fetchServices = async () => {
     try {
       const data = await api.obtenerDatos('/Hotel/restaurante/ListaServicios');
@@ -21,12 +20,14 @@ const BuscadorServicio = ({ onSelect, searchTerm, setSearchTerm }) => {
   };
 
   const filterServices = (term) => {
-    if (!term) {
+    const termLower = (term ?? '').toLowerCase();
+
+    if (!termLower) {
       setFilteredServices(allServices);
     } else {
       const filtered = allServices.filter((service) => {
-        const idMatch = service.ID_Servicio.toString().includes(term);
-        const nameMatch = service.Nombre.toLowerCase().includes(term.toLowerCase());
+        const idMatch = service.ID_Servicio?.toString().includes(termLower);
+        const nameMatch = (service.Nombre ?? '').toLowerCase().includes(termLower);
         return idMatch || nameMatch;
       });
       setFilteredServices(filtered);
@@ -58,7 +59,7 @@ const BuscadorServicio = ({ onSelect, searchTerm, setSearchTerm }) => {
   };
 
   useEffect(() => {
-    fetchServices(); // Llamar a la API al montar
+    fetchServices();
   }, []);
 
   return (
