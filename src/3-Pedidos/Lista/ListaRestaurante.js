@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from './LIstaRestaurante.module.css';
 import Filtros from './Filtros/Filtros';
-import api from '../../api';
-import {TablaServicios,mockServicios} from './TablaServicios/TablaServicios';
+import api, { useApiWatch } from '../../api'; // <-- CORRECCIÓN AQUÍ
+import { TablaServicios, mockServicios } from './TablaServicios/TablaServicios';
 
 function ListaRestaurante() {
-  // Fecha de hoy en formato YYYY-MM-DD para el filtro inicial
   const hoy = new Date().toISOString().split('T')[0];
 
   const [servicios, setServicios] = useState([]);
@@ -18,7 +17,7 @@ function ListaRestaurante() {
     precioUnitario: '',
     total: '',
     estadoServicio: '',
-    fechaInicial: hoy,   // Aquí fecha de hoy por defecto
+    fechaInicial: hoy,
     fechaFinal: '',
     mesa: '',
     nombreUsuarioFactura: '',
@@ -42,6 +41,8 @@ function ListaRestaurante() {
       setLoading(false);
     }
   };
+
+  useApiWatch('POST /Hotel/restaurante/recibir-pedido', obtenerServiciosPendientes);
 
   useEffect(() => {
     obtenerServiciosPendientes();

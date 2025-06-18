@@ -1,4 +1,8 @@
 import axios from 'axios';
+import { useEffect, useRef } from 'react';
+
+// Base URL de la API para que puedas usarla también en el hook si quieres
+const BASE_URL = 'http://localhost:1234';
 
 const api = {
   obtenerDatos: (endpoint, data = null, method = null) => {
@@ -7,7 +11,7 @@ const api = {
 
     const config = {
       method: httpMethod,
-      url: `https://hotel-production-758e.up.railway.app${endpoint}`,
+      url: `${BASE_URL}${endpoint}`,
       ...(data && { data }),
     };
 
@@ -18,5 +22,32 @@ const api = {
       });
   },
 };
+
+// Hook para escuchar eventos SSE y ejecutar una función cuando detecta un patrón
+// Usa la misma base URL para el endpoint SSE, así si cambias aquí, afecta a todos lados
+export function useApiWatch(pattern, onMatch) {
+  const onMatchRef = useRef(onMatch);
+  onMatchRef.current = onMatch;
+
+  useEffect(() => {
+    const eventSource = new EventSource(`${BASE_URL}/logs`);
+
+    eventSource.onmessage = (event) => {
+      const message = event.data;
+      if (message.includes(pattern)) {
+        onMatchRef.current();
+      }
+    };
+
+    eventSource.onerror = (err) => {
+      console.error('SSE error:', err);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [pattern]);
+}
 
 export default api;
