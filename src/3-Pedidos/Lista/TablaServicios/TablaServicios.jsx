@@ -21,6 +21,7 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
             <th>Estado Servicio</th>
             <th>Fecha Emisión</th>
             <th>Mesa</th>
+            <th>Método de Pago</th> {/* Nueva columna */}
             <th>Acción</th>
           </tr>
         </thead>
@@ -44,6 +45,8 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
 
               const rowSpan = serviciosGrupo.length;
 
+              const metodoPago = serviciosGrupo[0].Metodo_Pago || 'N/A'; // Obtener método pago del primer servicio
+
               // Construimos las filas de este grupo
               const filasGrupo = serviciosGrupo.map((servicio, index) => {
                 const isFirst = index === 0;
@@ -62,32 +65,29 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
                     )}
                     <td>{servicio.Nombre_Servicio}</td>
                     <td>{servicio.Cantidad}</td>
-<td>{parseFloat(servicio.Precio_Unitario).toString()}</td>
-{isFirst && (
-  <>
-    <td rowSpan={rowSpan}>{parseFloat(totalFactura).toString()}</td>
-    <td rowSpan={rowSpan}>{servicio.Estado_Servicio}</td>
-  </>
-)}
+                    <td>{parseFloat(servicio.Precio_Unitario).toString()}</td>
                     {isFirst && (
-                      <td rowSpan={rowSpan}>
-                        {new Date(servicio.Fecha_Emision).toLocaleDateString()}
-                      </td>
-                    )}
-                    {isFirst && <td rowSpan={rowSpan}>{servicio.mesa}</td>}
-                    {isFirst && (
-                      <td rowSpan={rowSpan}>
-                        <BotonOpciones
-                          facturaId={servicio.ID_Factura}
-                          servicios={serviciosGrupo}
-                          mesero={servicio.Nombre_Usuario_Factura}
-                          totalFactura={totalFactura}
-                          fechaEmision={servicio.Fecha_Emision}
-                          mesa={servicio.mesa}
-                          estadoServicio={servicio.Estado_Servicio}
-                          obtenerServiciosPendientes={obtenerServiciosPendientes}
-                        />
-                      </td>
+                      <>
+                        <td rowSpan={rowSpan}>{parseFloat(totalFactura).toString()}</td>
+                        <td rowSpan={rowSpan}>{servicio.Estado_Servicio}</td>
+                        <td rowSpan={rowSpan}>
+                          {new Date(servicio.Fecha_Emision).toLocaleDateString()}
+                        </td>
+                        <td rowSpan={rowSpan}>{servicio.mesa}</td>
+                        <td rowSpan={rowSpan}>{metodoPago}</td> {/* Mostrar método pago */}
+                        <td rowSpan={rowSpan}>
+                          <BotonOpciones
+                            facturaId={servicio.ID_Factura}
+                            servicios={serviciosGrupo}
+                            mesero={servicio.Nombre_Usuario_Factura}
+                            totalFactura={totalFactura}
+                            fechaEmision={servicio.Fecha_Emision}
+                            mesa={servicio.mesa}
+                            estadoServicio={servicio.Estado_Servicio}
+                            obtenerServiciosPendientes={obtenerServiciosPendientes}
+                          />
+                        </td>
+                      </>
                     )}
                   </tr>
                 );
@@ -100,7 +100,7 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
                     key={`separator-${facturaId}`}
                     className={styles.filaSeparadora}
                   >
-                    <td colSpan={10} />
+                    <td colSpan={11} /> {/* Incrementa el colspan por la nueva columna */}
                   </tr>
                 );
               }
@@ -109,7 +109,7 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
             })
           ) : (
             <tr>
-              <td colSpan="10" className={styles.noDataMessage}>
+              <td colSpan="11" className={styles.noDataMessage}>
                 No hay servicios disponibles.
               </td>
             </tr>
@@ -119,6 +119,7 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
     </div>
   );
 }
+
 
 // Simulación de servicios para pruebas
 export const mockServicios = Array.from({ length: 28 }, (_, i) => ({
