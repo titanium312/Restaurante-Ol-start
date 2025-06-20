@@ -47,3 +47,86 @@
   background-color: #e5e7eb;
   color: #9ca3af;
 }
+
+
+/* Overlay del modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Contenido del modal */
+.modalContent {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+
+
+
+
+
+.pago-titulo {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.pago-botones {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-confirmar,
+.btn-cancelar {
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-confirmar {
+  background-color: #007bff;
+}
+
+.btn-confirmar:hover {
+  background-color: #0069d9;
+}
+
+.btn-cancelar {
+  background-color: #dc3545;
+}
+
+.btn-cancelar:hover {
+  background-color: #c82333;
+}
+
+.btn-disabled {
+  background-color: #6c757d !important;
+  cursor: not-allowed;
+}
+
+
+
+
+
+
+
+
