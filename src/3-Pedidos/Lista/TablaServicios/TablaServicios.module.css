@@ -1,6 +1,7 @@
-/* Contenedor principal con scroll */
+
+
 .scrollContainer {
-  max-height: 650px; /* Altura para mostrar aproximadamente 5 filas */
+  max-height: 650px; 
   overflow-y: auto;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -9,7 +10,6 @@
   position: relative;
 }
 
-/* Estilos del scrollbar personalizado */
 .scrollContainer::-webkit-scrollbar {
   width: 8px;
 }
@@ -29,7 +29,6 @@
   background: linear-gradient(180deg, #475569, #334155);
 }
 
-/* Tabla principal */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -41,7 +40,6 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Encabezado de la tabla */
 .table thead {
   background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
   position: sticky;
@@ -71,7 +69,6 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Celdas del cuerpo */
 .table tbody td {
   padding: 14px 12px;
   border-bottom: 1px solid #e2e8f0;
@@ -80,7 +77,6 @@
   font-weight: 500;
 }
 
-/* Filas del grupo */
 .grupoFila {
   transition: all 0.3s ease;
   position: relative;
@@ -91,7 +87,6 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-/* Estados de servicio - Pendiente */
 .pendiente {
   background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
   border-left: 4px solid #f59e0b;
@@ -107,7 +102,6 @@
   box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
 }
 
-/* Estados de servicio - Pagada */
 .pagada {
   background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
   border-left: 4px solid #10b981;
@@ -123,7 +117,7 @@
   box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
 }
 
-/* Estados de servicio - Cancelada */
+
 .cancelada {
   background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
   border-left: 4px solid #ef4444;
@@ -139,20 +133,20 @@
   box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
 }
 
-/* Última fila del grupo */
+
 .ultimaFilaGrupo {
   border-bottom: 3px solid #e2e8f0;
   margin-bottom: 8px;
 }
 
-/* Fila separadora entre grupos */
+
 .table tbody .filaSeparadora td {
   padding: 6px 12px;
   border: none;
   background: linear-gradient(90deg, transparent 0%, #e2e8f0 50%, transparent 100%);
 }
 
-/* Mensaje cuando no hay datos */
+
 .noDataMessage {
   text-align: center;
   padding: 40px 20px;
@@ -162,7 +156,7 @@
   background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
 }
 
-/* Efectos adicionales para celdas con rowspan */
+
 .table tbody tr td[rowspan] {
   font-weight: 600;
   position: relative;
@@ -173,7 +167,7 @@
   border-radius: 6px 0 0 6px;
 }
 
-/* Animaciones suaves */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -189,7 +183,7 @@
   animation: fadeIn 0.5s ease-out;
 }
 
-/* Responsive design */
+
 @media (max-width: 768px) {
   .scrollContainer {
     max-height: 350px;
@@ -205,14 +199,20 @@
   }
 }
 
-/* Mejoras visuales adicionales */
+
 .table tbody tr:last-child .ultimaFilaGrupo {
   border-bottom: none;
 }
 
-/* Efecto de enfoque para accesibilidad */
+
 .table tbody tr:focus-within {
   outline: 2px solid #3b82f6;
   outline-offset: -2px;
   border-radius: 4px;
 }
+
+
+
+
+
+

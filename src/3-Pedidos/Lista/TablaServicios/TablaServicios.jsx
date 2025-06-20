@@ -93,7 +93,6 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
                 );
               });
 
-              // Solo si no es el último grupo, añadimos la fila separadora
               if (grupoIndex < grupos.length - 1) {
                 filasGrupo.push(
                   <tr
@@ -119,7 +118,6 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
     </div>
   );
 }
-
 
 // Simulación de servicios para pruebas
 export const mockServicios = Array.from({ length: 28 }, (_, i) => ({

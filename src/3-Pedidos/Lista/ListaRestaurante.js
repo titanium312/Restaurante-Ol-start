@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './LIstaRestaurante.module.css';
 import Filtros from './Filtros/Filtros';
-import api, { useApiWatch } from '../../api'; // <-- CORRECCIÓN AQUÍ
-import { TablaServicios, mockServicios } from './TablaServicios/TablaServicios';
+import api, { useApiWatch } from '../../api';
+import { TablaServicios } from './TablaServicios/TablaServicios';
+import CajaEstado from './Caja/Caja';
 
 function ListaRestaurante() {
   const hoy = new Date().toISOString().split('T')[0];
@@ -10,6 +12,9 @@ function ListaRestaurante() {
   const [servicios, setServicios] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showCajaEstado, setShowCajaEstado] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+
   const [filters, setFilters] = useState({
     idFactura: '',
     nombreServicio: '',
@@ -23,7 +28,16 @@ function ListaRestaurante() {
     nombreUsuarioFactura: '',
     buscador: ''
   });
-  const [showFilters, setShowFilters] = useState(false);
+
+  const username = localStorage.getItem('username');
+  const role = localStorage.getItem('role');
+  const userID = localStorage.getItem('userId');
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/');
+  };
 
   const obtenerServiciosPendientes = async () => {
     setLoading(true);
@@ -48,8 +62,8 @@ function ListaRestaurante() {
     obtenerServiciosPendientes();
   }, []);
 
-  const filteredServicios = (Array.isArray(servicios) ? servicios : [])
-    .filter((servicio) => {
+  const filteredServicios = servicios
+    .filter(servicio => {
       const fechaEmision = new Date(servicio.Fecha_Emision).toISOString().split('T')[0];
       return (
         (filters.buscador === '' || Object.values(servicio).some(val =>
@@ -63,7 +77,7 @@ function ListaRestaurante() {
         (filters.estadoServicio === '' || servicio.Estado_Servicio.toLowerCase().includes(filters.estadoServicio.toLowerCase())) &&
         (filters.fechaInicial === '' || fechaEmision >= filters.fechaInicial) &&
         (filters.fechaFinal === '' || fechaEmision <= filters.fechaFinal) &&
-        (filters.mesa === '' || servicio.mesa.toString().includes(filters.mesa))
+        (filters.mesa === '' || servicio.mesa?.toString().includes(filters.mesa))
       );
     })
     .sort((a, b) => a.ID_Factura - b.ID_Factura);
@@ -83,6 +97,20 @@ function ListaRestaurante() {
 
       <h2>Servicios Pendientes</h2>
 
+      {(role === 'Administrador' || role === 'Editor') && (
+        <>
+          <button
+            onClick={() => setShowCajaEstado(prev => !prev)}
+            className={styles.toggleButton}
+          >
+            {showCajaEstado ? 'Ocultar Caja Estado' : 'Mostrar Caja Estado'}
+          </button>
+          {showCajaEstado && <CajaEstado />}
+        </>
+      )}
+
+      <br /><br />
+
       <div className={styles.filtrosWrapper}>
         <Filtros
           filters={filters}
@@ -94,7 +122,7 @@ function ListaRestaurante() {
 
       <div className={styles.tablaWrapper}>
         <TablaServicios
-          servicios={mockServicios}
+          servicios={servicios}
           groupedServicios={groupedServicios}
           obtenerServiciosPendientes={obtenerServiciosPendientes}
         />
