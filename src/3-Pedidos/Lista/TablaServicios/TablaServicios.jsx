@@ -44,10 +44,8 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
                   : '';
 
               const rowSpan = serviciosGrupo.length;
+              const metodoPago = serviciosGrupo[0].Metodo_Pago || 'N/A';
 
-              const metodoPago = serviciosGrupo[0].Metodo_Pago || 'N/A'; // Obtener método pago del primer servicio
-
-              // Construimos las filas de este grupo
               const filasGrupo = serviciosGrupo.map((servicio, index) => {
                 const isFirst = index === 0;
                 const isLast = index === serviciosGrupo.length - 1;
@@ -65,16 +63,16 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
                     )}
                     <td>{servicio.Nombre_Servicio}</td>
                     <td>{servicio.Cantidad}</td>
-                    <td>{parseFloat(servicio.Precio_Unitario).toString()}</td>
+                    <td>{parseFloat(servicio.Precio_Unitario).toFixed(2)}</td>
                     {isFirst && (
                       <>
-                        <td rowSpan={rowSpan}>{parseFloat(totalFactura).toString()}</td>
-                        <td rowSpan={rowSpan}>{servicio.Estado_Servicio}</td>
+                        <td rowSpan={rowSpan}>{totalFactura.toFixed(2)}</td>
+                        <td rowSpan={rowSpan}>{estadoServicio}</td>
                         <td rowSpan={rowSpan}>
                           {new Date(servicio.Fecha_Emision).toLocaleDateString()}
                         </td>
                         <td rowSpan={rowSpan}>{servicio.mesa}</td>
-                        <td rowSpan={rowSpan}>{metodoPago}</td> {/* Mostrar método pago */}
+                        <td rowSpan={rowSpan}>{metodoPago}</td>
                         <td rowSpan={rowSpan}>
                           <BotonOpciones
                             facturaId={servicio.ID_Factura}
@@ -83,7 +81,7 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
                             totalFactura={totalFactura}
                             fechaEmision={servicio.Fecha_Emision}
                             mesa={servicio.mesa}
-                            estadoServicio={servicio.Estado_Servicio}
+                            estadoServicio={estadoServicio}
                             obtenerServiciosPendientes={obtenerServiciosPendientes}
                           />
                         </td>
@@ -99,7 +97,7 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
                     key={`separator-${facturaId}`}
                     className={styles.filaSeparadora}
                   >
-                    <td colSpan={11} /> {/* Incrementa el colspan por la nueva columna */}
+                    <td colSpan={11} />
                   </tr>
                 );
               }
@@ -108,7 +106,7 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
             })
           ) : (
             <tr>
-              <td colSpan="11" className={styles.noDataMessage}>
+              <td colSpan={11} className={styles.noDataMessage}>
                 No hay servicios disponibles.
               </td>
             </tr>
