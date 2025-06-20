@@ -21,11 +21,7 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
             <th>Estado Servicio</th>
             <th>Fecha Emisión</th>
             <th>Mesa</th>
-<<<<<<< HEAD
-            <th>Método de Pago</th>
-=======
             <th>Método de Pago</th> {/* Nueva columna */}
->>>>>>> 62f86cd2842d54fee0438f780cd4f4fd601acfb3
             <th>Acción</th>
           </tr>
         </thead>
@@ -49,12 +45,9 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
 
               const rowSpan = serviciosGrupo.length;
 
-<<<<<<< HEAD
-=======
               const metodoPago = serviciosGrupo[0].Metodo_Pago || 'N/A'; // Obtener método pago del primer servicio
 
               // Construimos las filas de este grupo
->>>>>>> 62f86cd2842d54fee0438f780cd4f4fd601acfb3
               const filasGrupo = serviciosGrupo.map((servicio, index) => {
                 const isFirst = index === 0;
                 const isLast = index === serviciosGrupo.length - 1;
@@ -81,13 +74,7 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
                           {new Date(servicio.Fecha_Emision).toLocaleDateString()}
                         </td>
                         <td rowSpan={rowSpan}>{servicio.mesa}</td>
-<<<<<<< HEAD
-                        <td rowSpan={rowSpan}>
-                          {servicio.Metodo_Pago || 'N/A'}
-                        </td>
-=======
                         <td rowSpan={rowSpan}>{metodoPago}</td> {/* Mostrar método pago */}
->>>>>>> 62f86cd2842d54fee0438f780cd4f4fd601acfb3
                         <td rowSpan={rowSpan}>
                           <BotonOpciones
                             facturaId={servicio.ID_Factura}
@@ -112,11 +99,7 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
                     key={`separator-${facturaId}`}
                     className={styles.filaSeparadora}
                   >
-<<<<<<< HEAD
-                    <td colSpan={11} />
-=======
                     <td colSpan={11} /> {/* Incrementa el colspan por la nueva columna */}
->>>>>>> 62f86cd2842d54fee0438f780cd4f4fd601acfb3
                   </tr>
                 );
               }
@@ -135,7 +118,6 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
     </div>
   );
 }
-
 
 // Simulación de servicios para pruebas
 export const mockServicios = Array.from({ length: 28 }, (_, i) => ({
