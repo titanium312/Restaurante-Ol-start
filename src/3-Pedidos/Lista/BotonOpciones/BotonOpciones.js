@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MetodoPago from './MetodoPago/MetodoPago';
-import api from '../../../api'; // Ajusta ruta según tu proyecto
+import api from '../../../api';
 import styles from './BotonOpciones.module.css';
 import { useFactura } from './Factura/Factura';
 import Modal from '../../../modal';
@@ -18,6 +18,8 @@ function BotonOpciones({
   const [selectedOption, setSelectedOption] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [metodoPagoSeleccionado, setMetodoPagoSeleccionado] = useState('');
+  const [cajaCerrada, setCajaCerrada] = useState(false);
+
   const { loading, setLoading, imprimirFactura } = useFactura({
     facturaId,
     servicios,
@@ -30,7 +32,37 @@ function BotonOpciones({
 
   const role = localStorage.getItem('role');
 
+  const esAdmin = role === 'Administrador';
+  const esEditor = role === 'Editor';
+ 
 
+  const puedeEliminar = esAdmin;
+  const puedeVerAcciones = esAdmin || (esEditor && !cajaCerrada);
+  const accionesPermitidas = esAdmin || (esEditor && !cajaCerrada);
+
+  useEffect(() => {
+    const verificarCaja = async () => {
+      const today = new Date().toISOString().split('T')[0];
+      try {
+        const data = await api.obtenerDatos(
+          `/hotel/restaurante/CajaEstado?fecha=${today}`,
+          {},
+          'POST'
+        );
+
+        if (Array.isArray(data) && data.length > 0) {
+          const ultimoEstado = data.sort((a, b) => new Date(b.Fecha) - new Date(a.Fecha))[0];
+          if (ultimoEstado.Descripcion.toLowerCase() === 'cerrada') {
+            setCajaCerrada(true);
+          }
+        }
+      } catch (err) {
+        console.error('Error al verificar estado de caja:', err);
+      }
+    };
+
+    verificarCaja();
+  }, []);
 
   const estadosFactura = [
     { value: 'pendiente', label: 'Pendiente' },
@@ -38,7 +70,6 @@ function BotonOpciones({
     { value: 'cancelado', label: 'Cancelada' },
   ];
 
-  // Manejo de clase en body para modal abierto (opcional, para estilos globales)
   useEffect(() => {
     if (modalOpen) {
       document.body.classList.add('modal-abierto');
@@ -51,6 +82,11 @@ function BotonOpciones({
   }, [modalOpen]);
 
   const cambiarEstado = async (estadoSeleccionado) => {
+    if (!accionesPermitidas) {
+      alert('No tienes permiso para cambiar el estado de la factura.');
+      return;
+    }
+
     setLoading(true);
     const estado = estadoSeleccionado === 'pendiente' ? 1 :
                    estadoSeleccionado === 'pagado' ? 2 : 3;
@@ -73,10 +109,16 @@ function BotonOpciones({
   };
 
   const confirmarPago = async () => {
+    if (!accionesPermitidas) {
+      alert('No tienes permiso para confirmar el pago.');
+      return;
+    }
+
     if (!metodoPagoSeleccionado) {
       alert('Por favor selecciona un método de pago');
       return;
     }
+
     setLoading(true);
     try {
       await api.obtenerDatos('/hotel/restaurante/cambiar-Metodo-pago', {
@@ -99,6 +141,11 @@ function BotonOpciones({
   };
 
   const eliminarFactura = async () => {
+    if (!puedeEliminar) {
+      alert('No tienes permiso para eliminar facturas.');
+      return;
+    }
+
     setLoading(true);
     try {
       if (!facturaId) throw new Error('ID de factura no definido');
@@ -131,6 +178,7 @@ function BotonOpciones({
 
     switch (option) {
       case 'imprimir':
+        if (!accionesPermitidas) return alert('No tienes permiso para imprimir.');
         imprimirFactura();
         break;
       case 'eliminar':
@@ -149,103 +197,39 @@ function BotonOpciones({
 
   return (
     <div className={styles.contenedor}>
-      <select
-        value={selectedOption}
-        disabled={loading}
-        onChange={async (e) => {
-          const selected = e.target.value;
-          setSelectedOption(selected);
-          await handleAction(selected);
-        }}
-        className={`${styles.select} ${selectedOption ? styles.selected : ''}`}
-      >
-        <option value="">Acción</option>
-        {estadosFactura.map(({ value, label }) => (
-          <option key={value} value={value}>{label}</option>
-        ))}
-        <option value="imprimir">🖨️ Imprimir</option>
-        {role === 'Administrador' && (
-          <option value="eliminar">🗑️ Eliminar</option>
-        )}
-      </select>
+      {puedeVerAcciones && (
+        <select
+          value={selectedOption}
+          disabled={loading}
+          onChange={async (e) => {
+            const selected = e.target.value;
+            setSelectedOption(selected);
+            await handleAction(selected);
+          }}
+          className={`${styles.select} ${selectedOption ? styles.selected : ''}`}
+        >
+          <option value="">Acción</option>
+          {estadosFactura.map(({ value, label }) => (
+            <option key={value} value={value}>{label}</option>
+          ))}
+          <option value="imprimir">🖨️ Imprimir</option>
+          {puedeEliminar && <option value="eliminar">🗑️ Eliminar</option>}
+        </select>
+      )}
 
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-        <>
-          <style>{`
-            div.container {
-              background-color: #f8f9fa;
-              padding: 30px 40px;
-              border-radius: 12px;
-              box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-              max-width: 400px;
-              margin: 40px auto;
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            }
-            h3 {
-              color: #333;
-              font-weight: 600;
-              margin-bottom: 25px;
-              font-size: 1.5rem;
-              text-align: center;
-            }
-            div.buttons {
-              margin-top: 30px;
-              display: flex;
-              justify-content: center;
-              gap: 15px;
-            }
-            button {
-              padding: 12px 28px;
-              font-size: 1rem;
-              border-radius: 8px;
-              border: none;
-              cursor: pointer;
-              transition: background-color 0.3s ease, transform 0.2s ease;
-            }
-            button.confirm {
-              background-color: #4caf50;
-              color: white;
-            }
-            button.confirm:hover:not(:disabled) {
-              background-color: #45a049;
-              transform: scale(1.05);
-            }
-            button.cancel {
-              background-color: #e0e0e0;
-              color: #555;
-            }
-            button.cancel:hover:not(:disabled) {
-              background-color: #ccc;
-              transform: scale(1.05);
-            }
-            button:disabled {
-              background-color: #bbb;
-              cursor: not-allowed;
-              transform: none;
-            }
-          `}</style>
-
-          <div className="container">
-            <h3>Seleccione Método de Pago</h3>
-            <MetodoPago onTipoSelect={setMetodoPagoSeleccionado} />
-            <div className="buttons">
-              <button
-                className="confirm"
-                onClick={confirmarPago}
-                disabled={loading}
-              >
-                Confirmar Pago
-              </button>
-              <button
-                className="cancel"
-                onClick={() => setModalOpen(false)}
-                disabled={loading}
-              >
-                Cancelar
-              </button>
-            </div>
+        <div className="container">
+          <h3>Seleccione Método de Pago</h3>
+          <MetodoPago onTipoSelect={setMetodoPagoSeleccionado} />
+          <div className="buttons">
+            <button className="confirm" onClick={confirmarPago} disabled={loading}>
+              Confirmar Pago
+            </button>
+            <button className="cancel" onClick={() => setModalOpen(false)} disabled={loading}>
+              Cancelar
+            </button>
           </div>
-        </>
+        </div>
       </Modal>
     </div>
   );

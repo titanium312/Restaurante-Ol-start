@@ -15,7 +15,7 @@ function InsertarPedido() {
   const [facturaBuscada, setFacturaBuscada] = useState(false);
   const [message, setMessage] = useState('');
   const [fechaEmision, setFechaEmision] = useState('');
-
+const [mostrarActualizarFactura, setMostrarActualizarFactura] = useState(false);
   
   const role = localStorage.getItem('role');
   const userID = localStorage.getItem('userId');
@@ -105,16 +105,20 @@ function InsertarPedido() {
     if (!mesa) return alert('Ingresa mesa');
     if (items.length === 0) return alert('Ingresa al menos un pedido');
 
-    const payload = {
-      ID_usuario: userID,
-      ID_Factura: facturaBuscada ? Number(facturaId) : undefined,
-      orders: items.map(it => ({
-        ID_Servicio: it.idServicio,
-        Cantidad: Number(it.cantidad),
-        mesa,
-      })),
-      in: facturaBuscada,
-    };
+const payload = {
+  ID_usuario: userID,
+  ID_Factura: mostrarActualizarFactura && facturaBuscada ? Number(facturaId) : undefined,
+  orders: items.map(it => ({
+    ID_Servicio: it.idServicio,
+    Cantidad: Number(it.cantidad),
+    mesa,
+  })),
+  in: mostrarActualizarFactura && facturaBuscada,
+};
+
+if (!mostrarActualizarFactura && fechaEmision) {
+  payload.Fecha_Emision = fechaEmision;
+}
 
     if (!facturaBuscada && fechaEmision) {
       payload.Fecha_Emision = fechaEmision;
@@ -134,27 +138,53 @@ function InsertarPedido() {
     }
   };
 
+
+
+
+
+
+
+
+
+
+
   return (
     <div className={styles.formularioContenedor}>
       <h1 className={styles.tituloFormulario}>Pedido / Actualizar Factura</h1>
-      {(role === 'Administrador' || role === 'Editor') && (
-        <div className={styles.grillaCampos}>
+     
+     
+{(role === 'Administrador' || role === 'Editor') && (
+  <>
+    <label>
+      <input
+        type="checkbox"
+        checked={mostrarActualizarFactura}
+        onChange={() => setMostrarActualizarFactura(!mostrarActualizarFactura)}
+      />
+      ¿Actualizar Factura Existente?
+    </label>
+
+    {mostrarActualizarFactura && (
+      <div className={styles.grillaCampos}>
+        <input
+          type="text"
+          placeholder="ID Factura"
+          value={facturaId}
+          onChange={e => setFacturaId(e.target.value)}
+        />
+        <button onClick={buscarFactura}>Buscar</button>
+        {!facturaBuscada && (
           <input
-            type="text"
-            placeholder="ID Factura"
-            value={facturaId}
-            onChange={e => setFacturaId(e.target.value)}
+            type="date"
+            value={fechaEmision}
+            onChange={e => setFechaEmision(e.target.value)}
           />
-          <button onClick={buscarFactura}>Buscar</button>
-          {!facturaBuscada && (
-            <input
-              type="date"
-              value={fechaEmision}
-              onChange={e => setFechaEmision(e.target.value)}
-            />
-          )}
-        </div>
-      )}
+        )}
+      </div>
+    )}
+  </>
+)}
+
 
       <div className={styles.grillaCampos}>
         <BuscadorServicio

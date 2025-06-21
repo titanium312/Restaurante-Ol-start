@@ -13,6 +13,7 @@ function CajaManagement() {
 
   const today = new Date().toISOString().slice(0, 10);
   const username = localStorage.getItem('username');
+  const role = localStorage.getItem('role'); // rol actual
 
   const fetchCajaEstado = useCallback(async () => {
     setCajaLoading(true);
@@ -68,6 +69,27 @@ function CajaManagement() {
     setActionError('');
     setTotalesMetodosPago({});
 
+    if (role !== 'Administrador') {
+      setActionError('Solo administradores pueden realizar esta acción.');
+      return;
+    }
+
+    if (actionType === 'abrir') {
+      if (cajaData?.Descripcion === 'Abierta') {
+        setActionError('La caja ya está abierta.');
+        return;
+      }
+      if (cajaData?.Descripcion === 'Cerrada' && role !== 'Administrador') {
+        setActionError('Solo los administradores pueden reabrir una caja cerrada.');
+        return;
+      }
+    }
+
+    if (actionType === 'cerrar' && cajaData?.Descripcion !== 'Abierta') {
+      setActionError('No se puede cerrar la caja porque no está abierta.');
+      return;
+    }
+
     if (!comentario.trim()) {
       setActionError('Por favor, ingresa un comentario.');
       return;
@@ -101,7 +123,20 @@ function CajaManagement() {
   };
 
   const cajaAbierta = cajaData?.Descripcion === 'Abierta';
-  const cajaCerrada = cajaData?.Descripcion === 'Cerrada';
+
+  // El botón abrir está habilitado si:
+  // - El rol es Administrador
+  // - Y la caja no está abierta
+  // (Puede estar cerrada y Administrador puede abrir de nuevo)
+  const botonAbrirHabilitado = role === 'Administrador' && !cajaAbierta;
+
+  // El botón cerrar está habilitado si:
+  // - El rol es Administrador
+  // - Y la caja está abierta
+  const botonCerrarHabilitado = role === 'Administrador' && cajaAbierta;
+
+  // El input comentario está habilitado para todos los administradores (sin importar estado de caja)
+  const inputComentarioHabilitado = role === 'Administrador';
 
   return (
     <div className={styles['caja-container-x7f9r2']}>
@@ -112,7 +147,11 @@ function CajaManagement() {
           <h3 className={styles['caja-section-title-x7f9r2']}>
             📊 Estado Actual de Caja ({today})
             {cajaData && (
-              <span className={`${styles['caja-status-badge-x7f9r2']} ${cajaAbierta ? styles['caja-status-open-x7f9r2'] : styles['caja-status-closed-x7f9r2']}`}>
+              <span
+                className={`${styles['caja-status-badge-x7f9r2']} ${
+                  cajaAbierta ? styles['caja-status-open-x7f9r2'] : styles['caja-status-closed-x7f9r2']
+                }`}
+              >
                 {cajaData.Descripcion}
               </span>
             )}
@@ -133,7 +172,8 @@ function CajaManagement() {
                 <strong>📋 Descripción:</strong> {cajaData.Descripcion}
               </div>
               <div className={styles['caja-info-x7f9r2']}>
-                <strong>💬 Comentarios:</strong><br />
+                <strong>💬 Comentarios:</strong>
+                <br />
                 {cajaData.Comentario}
               </div>
             </>
@@ -153,9 +193,11 @@ function CajaManagement() {
             type="text"
             value={comentario}
             onChange={(e) => setComentario(e.target.value)}
-            className={`${styles['caja-com-input-x7f9r2']} ${cajaCerrada ? styles['caja-com-input-disabled-x7f9r2'] : ''}`}
+            className={`${styles['caja-com-input-x7f9r2']} ${
+              !inputComentarioHabilitado ? styles['caja-com-input-disabled-x7f9r2'] : ''
+            }`}
             placeholder="Ej: Inicio de turno, Cierre de día, Ajuste"
-            disabled={cajaCerrada}
+            disabled={!inputComentarioHabilitado}
           />
 
           {actionError && <p className={styles['caja-msg-error-x7f9r2']}>❌ {actionError}</p>}
@@ -165,8 +207,11 @@ function CajaManagement() {
             <button
               type="button"
               onClick={() => handleCajaAction('abrir')}
-              className={`${styles['caja-button-x7f9r2']} ${cajaAbierta || cajaCerrada ? styles['caja-button-disabled-x7f9r2'] : styles['caja-button-open-x7f9r2']}`}
-              disabled={cajaAbierta || cajaCerrada}
+              className={`${styles['caja-button-x7f9r2']} ${
+                !botonAbrirHabilitado ? styles['caja-button-disabled-x7f9r2'] : styles['caja-button-open-x7f9r2']
+              }`}
+              disabled={!botonAbrirHabilitado}
+              title={role !== 'Administrador' ? 'Solo administradores pueden abrir la caja' : undefined}
             >
               🔓 Abrir Caja
             </button>
@@ -174,8 +219,11 @@ function CajaManagement() {
             <button
               type="button"
               onClick={() => handleCajaAction('cerrar')}
-              className={`${styles['caja-button-x7f9r2']} ${!cajaAbierta ? styles['caja-button-disabled-x7f9r2'] : styles['caja-button-close-x7f9r2']}`}
-              disabled={!cajaAbierta}
+              className={`${styles['caja-button-x7f9r2']} ${
+                !botonCerrarHabilitado ? styles['caja-button-disabled-x7f9r2'] : styles['caja-button-close-x7f9r2']
+              }`}
+              disabled={!botonCerrarHabilitado}
+              title={role !== 'Administrador' ? 'Solo administradores pueden cerrar la caja' : undefined}
             >
               🔒 Cerrar Caja
             </button>
