@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styles from './LIstaRestaurante.module.css';
 import Filtros from './Filtros/Filtros';
 import api, { useApiWatch } from '../../api';

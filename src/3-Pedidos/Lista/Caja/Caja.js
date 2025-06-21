@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../../../api';
-import { useNavigate } from 'react-router-dom';
 
 function CajaManagement() {
   const [comentario, setComentario] = useState('');

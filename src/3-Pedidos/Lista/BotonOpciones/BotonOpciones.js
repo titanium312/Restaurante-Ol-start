@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Añadí porque usas navigate
 import MetodoPago from './MetodoPago/MetodoPago';
 import api from '../../../api'; // Ajusta ruta según tu proyecto
 import styles from './BotonOpciones.module.css';

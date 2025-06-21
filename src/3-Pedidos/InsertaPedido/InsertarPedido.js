@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styles from './InsertarPedido.module.css';
 import BuscadorServicio from './BuscadorServicio/BuscardorServicio';
 import api from '../../api';
@@ -21,7 +20,7 @@ function InsertarPedido() {
   const role = localStorage.getItem('role');
   const userID = localStorage.getItem('userId');
 
-  
+
   const verificarEstadoCaja = async () => {
     const hoy = new Date().toISOString().split('T')[0];
     try {
