@@ -18,9 +18,7 @@ const contentStyle = {
 
 };
 
-const closeButtonStyle = {
 
-};
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;

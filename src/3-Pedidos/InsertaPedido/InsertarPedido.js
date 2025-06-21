@@ -17,16 +17,11 @@ function InsertarPedido() {
   const [message, setMessage] = useState('');
   const [fechaEmision, setFechaEmision] = useState('');
 
-  const username = localStorage.getItem('username');
+  
   const role = localStorage.getItem('role');
   const userID = localStorage.getItem('userId');
-  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate('/');
-  };
-
+  
   const verificarEstadoCaja = async () => {
     const hoy = new Date().toISOString().split('T')[0];
     try {

@@ -29,15 +29,10 @@ function ListaRestaurante() {
     buscador: ''
   });
 
-  const username = localStorage.getItem('username');
-  const role = localStorage.getItem('role');
-  const userID = localStorage.getItem('userId');
-  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate('/');
-  };
+  const role = localStorage.getItem('role');
+
+
 
   const obtenerServiciosPendientes = async () => {
     setLoading(true);

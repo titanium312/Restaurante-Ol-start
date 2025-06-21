@@ -13,12 +13,8 @@ function CajaManagement() {
 
   const today = new Date().toISOString().slice(0, 10);
   const username = localStorage.getItem('username');
-  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    ['isLoggedIn', 'username', 'role'].forEach((key) => localStorage.removeItem(key));
-    navigate('/');
-  };
+
 
   const fetchCajaEstado = useCallback(async () => {
     setCajaLoading(true);
