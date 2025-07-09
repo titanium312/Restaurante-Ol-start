@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useRef } from 'react';
 
 // Base URL de la API para que puedas usarla también en el hook si quieres
-const BASE_URL = 'http://localhost:1234';
+const BASE_URL = 'https://hotel-production-758e.up.railway.app';
 
 const api = {
   obtenerDatos: (endpoint, data = null, method = null) => {
