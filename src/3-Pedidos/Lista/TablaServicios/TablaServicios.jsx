@@ -63,10 +63,11 @@ export function TablaServicios({ groupedServicios, obtenerServiciosPendientes })
                     )}
                     <td>{servicio.Nombre_Servicio}</td>
                     <td>{servicio.Cantidad}</td>
-                    <td>{parseFloat(servicio.Precio_Unitario).toFixed(2)}</td>
+                    <td>{new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 }).format(parseFloat(servicio.Precio_Unitario))}</td>
+
                     {isFirst && (
                       <>
-                        <td rowSpan={rowSpan}>{totalFactura.toFixed(2)}</td>
+                        <td rowSpan={rowSpan}>{new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 }).format(parseFloat(totalFactura.toFixed()))}</td>
                         <td rowSpan={rowSpan}>{estadoServicio}</td>
                         <td rowSpan={rowSpan}>
                           {new Date(servicio.Fecha_Emision).toLocaleDateString()}

@@ -42,27 +42,46 @@ const [mostrarActualizarFactura, setMostrarActualizarFactura] = useState(false);
     }
   };
 
-  const buscarFactura = async () => {
-    if (!facturaId) return alert('Ingresa un ID de factura');
-    try {
-      const data = await api.obtenerDatos(`/Hotel/restaurante/servicio/Recepcion-ServiciosList?idFactura=${facturaId}`);
-      const productos = (data.Bar || []).map(p => ({
+const buscarFactura = async () => {
+  if (!facturaId) return alert('Ingresa un ID de factura');
+
+  try {
+    const data = await api.obtenerDatos(`/Hotel/restaurante/servicio/Recepcion-ServiciosList?idFactura=${facturaId}`);
+
+    if (!data.facturas || data.facturas.length === 0) {
+      alert('No se encontró la factura');
+      setItems([]);
+      setMesa('');
+      setFacturaBuscada(false);
+      return;
+    }
+
+    const factura = data.facturas[0];
+
+    const servicios = factura.Servicios;
+    const productos = [];
+
+    for (const tipo in servicios) {
+      productos.push(...servicios[tipo].map(p => ({
         idServicio: p.ID_Servicio,
         nombreProducto: p.Nombre_Servicio,
         cantidad: p.Cantidad,
         precio: p.Precio_Unitario,
-        mesa: p.mesa,
-      }));
-      setItems(productos);
-      setMesa(productos[0]?.mesa || '');
-      setFacturaBuscada(true);
-    } catch {
-      alert('No se pudo obtener la factura');
-      setItems([]);
-      setMesa('');
-      setFacturaBuscada(false);
+        mesa: factura.mesa,
+      })));
     }
-  };
+
+    setItems(productos);
+    setMesa(factura.mesa || '');
+    setFacturaBuscada(true);
+  } catch (err) {
+    console.error(err);
+    alert('No se pudo obtener la factura');
+    setItems([]);
+    setMesa('');
+    setFacturaBuscada(false);
+  }
+};
 
   const handleServiceSelect = service => {
     if (items.some(it => it.idServicio === service.ID_Servicio)) {

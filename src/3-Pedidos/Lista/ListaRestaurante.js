@@ -28,29 +28,59 @@ function ListaRestaurante() {
     buscador: ''
   });
 
-
   const role = localStorage.getItem('role');
 
+// Función que obtiene los servicios pendientes desde el backend,
+// transforma la respuesta para crear un array plano con información completa
+// y actualiza el estado con esos servicios.
+const obtenerServiciosPendientes = async () => {
+  setLoading(true);
+  setError(null);
+  try {
+    // Consulta al backend la lista de facturas con sus servicios
+    const result = await api.obtenerDatos('/Hotel/restaurante/servicio/Recepcion-ServiciosList');
+
+    // Transformamos la respuesta para obtener un array plano de servicios,
+    // agregando datos de factura y tipo de servicio a cada elemento.
+    const serviciosPlanos = result.facturas.flatMap(factura => {
+      const serviciosPorFactura = [];
+
+      // Iterar cada tipo de servicio (ej. Restaurante, Bar, etc)
+      for (const tipo in factura.Servicios) {
+        factura.Servicios[tipo].forEach(servicio => {
+          serviciosPorFactura.push({
+            ...servicio,
+            Tipo_Servicio: tipo,
+            ID_Factura: factura.ID_Factura,
+            Fecha_Emision: factura.Fecha_Emision,
+            mesa: factura.mesa,
+            Nombre_Usuario_Factura: factura.Nombre_Usuario_Factura,
+            Metodo_Pago: factura.Metodo_Pago,
+            Estado_Servicio: factura.Estado_Servicio,
+            Precio_Unitario: servicio.Precio_Unitario,
+            Total: servicio.Cantidad * servicio.Precio_Unitario,
+          });
+        });
+      }
+
+      return serviciosPorFactura;
+    });
+
+    // Actualiza el estado con el array plano de servicios
+    setServicios(serviciosPlanos);
+  } catch (err) {
+    setError(err.message || 'Error al cargar los servicios');
+  } finally {
+    setLoading(false);
+  }
+};
 
 
-  const obtenerServiciosPendientes = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const result = await api.obtenerDatos('/Hotel/restaurante/servicio/Recepcion-ServiciosList');
-      const serviciosCompletos = [
-        ...(Array.isArray(result.Restaurante) ? result.Restaurante : []),
-        ...(Array.isArray(result.Bar) ? result.Bar : []),
-      ];
-      setServicios(serviciosCompletos);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  useApiWatch('POST /Hotel/restaurante/recibir-pedido', obtenerServiciosPendientes);
+// Uso del hook para escuchar cuando se realice un POST a /Hotel/restaurante/recibir-pedido
+// y refrescar automáticamente los servicios pendientes.
+useApiWatch('POST /Hotel/restaurante/recibir-pedido', obtenerServiciosPendientes);
+
 
   useEffect(() => {
     obtenerServiciosPendientes();
