@@ -79,7 +79,14 @@ const Usuario = ({ changeContent }) => {
                   >
                     Agregar Servicio
                   </button>
-
+                    <button
+               id="administrarProductos-btn"
+                      onClick={() => changeContent('Administrar Productos')}
+                      className="add-service-button"
+                      type="button"
+                    >
+                      Administrar Productos
+                    </button>
                   {role === 'Administrador' && (
                     <button
                       id="administrarUsuarios-btn"

@@ -64,63 +64,62 @@ function CajaManagement() {
     loadTotalesIfCajaCerrada();
   }, [cajaData, loadTotalesIfCajaCerrada]);
 
-  const handleCajaAction = async (actionType) => {
-    setActionMessage('');
-    setActionError('');
-    setTotalesMetodosPago({});
+ const handleCajaAction = async (actionType) => {
+  setActionMessage('');
+  setActionError('');
+  setTotalesMetodosPago({});
 
-    if (role !== 'Administrador') {
-      setActionError('Solo administradores pueden realizar esta acción.');
+  if (role !== 'Administrador') {
+    setActionError('Solo administradores pueden realizar esta acción.');
+    return;
+  }
+
+  if (actionType === 'abrir') {
+    if (cajaData?.Descripcion === 'Abierta') {
+      setActionError('La caja ya está abierta.');
       return;
     }
+  }
 
-    if (actionType === 'abrir') {
-      if (cajaData?.Descripcion === 'Abierta') {
-        setActionError('La caja ya está abierta.');
-        return;
-      }
-      if (cajaData?.Descripcion === 'Cerrada' && role !== 'Administrador') {
-        setActionError('Solo los administradores pueden reabrir una caja cerrada.');
-        return;
-      }
-    }
+  if (actionType === 'cerrar' && cajaData?.Descripcion !== 'Abierta') {
+    setActionError('No se puede cerrar la caja porque no está abierta.');
+    return;
+  }
 
-    if (actionType === 'cerrar' && cajaData?.Descripcion !== 'Abierta') {
-      setActionError('No se puede cerrar la caja porque no está abierta.');
-      return;
-    }
+  if (!comentario.trim()) {
+    setActionError('Por favor, ingresa un comentario.');
+    return;
+  }
 
-    if (!comentario.trim()) {
-      setActionError('Por favor, ingresa un comentario.');
-      return;
-    }
+  if (!username) {
+    setActionError('No se encontró usuario logueado. Por favor inicia sesión.');
+    return;
+  }
 
-    if (!username) {
-      setActionError('No se encontró usuario logueado. Por favor inicia sesión.');
-      return;
-    }
+  let totales = {};
+  if (actionType === 'cerrar') {
+    totales = await fetchTotalesPorMetodoPago();
+    setTotalesMetodosPago(totales);
+  }
 
-    let totales = {};
-    if (actionType === 'cerrar') {
-      totales = await fetchTotalesPorMetodoPago();
-      setTotalesMetodosPago(totales);
-    }
-
-    const payload = {
-      descripcion: actionType === 'abrir' ? 'Abierta' : 'Cerrada',
-      comentario: `${username}: ${comentario}`,
-      usuario: username,
-    };
-
-    try {
-      await api.obtenerDatos('/hotel/restaurante/Caja', payload, 'POST');
-      setActionMessage(`Caja ${actionType === 'abrir' ? 'abierta' : 'cerrada'} exitosamente.`);
-      setComentario('');
-      fetchCajaEstado();
-    } catch (err) {
-      setActionError(err.message || 'Error al realizar la acción en caja.');
-    }
+  const payload = {
+    descripcion: actionType === 'abrir' ? 'Abierta' : 'Cerrada',
+    comentario: `${username}: ${comentario}`,
+    usuario: username,
+    fecha: today,
   };
+
+  console.log('Enviando payload:', payload);
+
+  try {
+    await api.obtenerDatos('/hotel/restaurante/Caja', payload, 'POST');
+    setActionMessage(`Caja ${actionType === 'abrir' ? 'abierta' : 'cerrada'} exitosamente.`);
+    setComentario('');
+    fetchCajaEstado();
+  } catch (err) {
+    setActionError(err.message || 'Error al realizar la acción en caja.');
+  }
+};
 
   const cajaAbierta = cajaData?.Descripcion === 'Abierta';
 

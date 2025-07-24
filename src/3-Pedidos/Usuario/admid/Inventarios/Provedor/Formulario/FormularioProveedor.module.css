@@ -1,0 +1,84 @@
+.fp_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 2rem;
+}
+
+.fp_field {
+  display: flex;
+  flex-direction: column;
+}
+
+.fp_label {
+  font-weight: 600;
+  color: #2d3e50;
+  margin-bottom: 6px;
+}
+
+.fp_input {
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fp_input:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 6px rgba(74, 144, 226, 0.35);
+  background-color: #fff;
+  outline: none;
+}
+
+.fp_botonSubmit {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.fp_botonSubmit button {
+  padding: 14px 24px;
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 160px;
+}
+
+.fp_botonSubmit button:hover {
+  background-color: #357ab8;
+}
+
+.fp_botonCancelar {
+  background-color: #f44336 !important;
+}
+
+.fp_botonCancelar:hover {
+  background-color: #c62828 !important;
+}
+
+.fp_fullWidth {
+  grid-column: 1 / -1;
+}
+
+/* Responsive para pantallas pequeñas: una sola columna */
+@media (max-width: 768px) {
+  .fp_grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fp_botonSubmit {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .fp_botonSubmit button {
+    width: 100%;
+  }
+}

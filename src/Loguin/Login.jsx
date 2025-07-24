@@ -25,7 +25,6 @@ const Login = ({ onLoginSuccess }) => {
       // Verificar si la respuesta fue exitosa
       if (response.message === 'Inicio de sesión exitoso') {
         const { usuario } = response;
-        console.log('Inicio de sesión exitoso:', response.message);
 
         // Almacenar los datos del usuario en localStorage
         localStorage.setItem('isLoggedIn', 'true');

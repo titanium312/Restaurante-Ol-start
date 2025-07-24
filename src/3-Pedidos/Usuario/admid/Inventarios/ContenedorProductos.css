@@ -1,0 +1,275 @@
+/* ContenedorProductos.css */
+
+.contenedor-productos-unique {
+  max-width: 100%;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.contenedor-productos-unique::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4a90e2, #357ab8);
+  border-radius: 12px 12px 0 0;
+}
+
+.contenedor-productos-unique h1 {
+  color: #2d3e50;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.contenedor-productos-unique h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #4a90e2, #357ab8);
+  border-radius: 2px;
+}
+
+/* Botones de vista */
+.botones-vista-unique {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  flex-wrap: wrap;
+}
+
+.botones-vista-unique button {
+  flex: 1;
+  min-width: 160px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  color: #2d3e50;
+  position: relative;
+  overflow: hidden;
+}
+
+.botones-vista-unique button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s ease;
+}
+
+.botones-vista-unique button:hover {
+  background-color: rgba(74, 144, 226, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.15);
+}
+
+.botones-vista-unique button:hover::before {
+  left: 100%;
+}
+
+.botones-vista-unique button.activo-unique {
+  background: linear-gradient(135deg, #4a90e2, #357ab8);
+  color: white;
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+  transform: translateY(-1px);
+}
+
+.botones-vista-unique button.activo-unique:hover {
+  background: linear-gradient(135deg, #357ab8, #2d5aa0);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
+}
+
+/* Contenedor de formularios */
+.contenedor-productos-unique > div {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: #fafbfc;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.contenedor-productos-unique > div:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-color: #4a90e2;
+}
+
+/* Estados de carga y error */
+.contenedor-productos-unique .loading,
+.contenedor-productos-unique .error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 10px;
+  margin: 2rem 0;
+}
+
+.contenedor-productos-unique .loading {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  color: #4a90e2;
+  position: relative;
+}
+
+.contenedor-productos-unique .loading::before {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e9ecef;
+  border-top: 4px solid #4a90e2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.contenedor-productos-unique .error {
+  background: linear-gradient(135deg, #fee, #fdd);
+  color: #c53030;
+  border: 1px solid #feb2b2;
+}
+
+/* Separador horizontal */
+.contenedor-productos-unique hr {
+  margin: 2rem 0;
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #e9ecef, transparent);
+  border-radius: 1px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contenedor-productos-unique {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .contenedor-productos-unique h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .botones-vista-unique {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .botones-vista-unique button {
+    min-width: auto;
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contenedor-productos-unique {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .contenedor-productos-unique h1 {
+    font-size: 1.8rem;
+  }
+  
+  .botones-vista-unique button {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+}
+
+/* Animaciones de entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contenedor-productos-unique {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.contenedor-productos-unique > div {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* Efectos de hover para mejorar la interactividad */
+.contenedor-productos-unique {
+  transition: all 0.3s ease;
+}
+
+.contenedor-productos-unique:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Estilos adicionales para elementos internos */
+.contenedor-productos-unique .formulario-container {
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e9ecef;
+}
+
+.contenedor-productos-unique .tabla-container {
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e9ecef;
+}
+
+/* Indicador de sección activa */
+.contenedor-productos-unique .seccion-activa {
+  position: relative;
+}
+
+.contenedor-productos-unique .seccion-activa::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -1.5rem;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #4a90e2, #357ab8);
+  border-radius: 0 2px 2px 0;
+}

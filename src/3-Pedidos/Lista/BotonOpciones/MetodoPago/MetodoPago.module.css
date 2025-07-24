@@ -1,0 +1,37 @@
+.metodoPago__container {
+  margin-bottom: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.metodoPago__label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
+}
+
+.metodoPago__select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1.8px solid #ccc;
+  font-size: 1rem;
+  color: #444;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  background-color: #fff;
+}
+
+/* ESTILO AL TENER FOCO */
+.metodoPago__select:focus {
+  border: 1.8px solid #4caf50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+}
+
+.metodoPago__loadingText {
+  font-style: italic;
+  color: #666;
+}

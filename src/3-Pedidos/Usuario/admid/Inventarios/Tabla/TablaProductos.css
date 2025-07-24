@@ -1,0 +1,241 @@
+/* TablaProductos.module.css */
+
+.fizzbizz-contenedor-tabla-productos {
+  max-width: 100%;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.fizzbizz-titulo-tabla {
+  color: #2d3e50;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border-bottom: 3px solid #4a90e2;
+  padding-bottom: 0.5rem;
+}
+
+.fizzbizz-cargando-productos {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #4a90e2;
+  padding: 2rem;
+  font-weight: 500;
+}
+
+.fizzbizz-error-productos {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #e74c3c;
+  padding: 2rem;
+  background-color: #fdf2f2;
+  border-radius: 8px;
+  border: 1px solid #f5c6cb;
+}
+
+.fizzbizz-no-productos {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #7f8c8d;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.fizzbizz-tabla-productos {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fizzbizz-head-tabla {
+  background: linear-gradient(135deg, #4a90e2 0%, #357ab8 100%);
+  color: white;
+}
+
+.fizzbizz-fila-header th {
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.fizzbizz-body-tabla {
+  background-color: #ffffff;
+}
+
+.fizzbizz-fila-producto {
+  border-bottom: 1px solid #e9ecef;
+  transition: background-color 0.2s ease;
+}
+
+.fizzbizz-fila-producto:hover {
+  background-color: #f8f9fa;
+}
+
+.fizzbizz-fila-producto:nth-child(even) {
+  background-color: #fafbfc;
+}
+
+.fizzbizz-fila-producto:nth-child(even):hover {
+  background-color: #f1f3f4;
+}
+
+.fizzbizz-fila-producto td {
+  padding: 14px 12px;
+  font-size: 0.9rem;
+  color: #2d3e50;
+  vertical-align: middle;
+  border: none;
+}
+
+.fizzbizz-td-id {
+  font-weight: 600;
+  color: #4a90e2;
+}
+
+.fizzbizz-td-nombre {
+  font-weight: 500;
+  color: #2d3e50;
+}
+
+.fizzbizz-td-descripcion {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fizzbizz-td-precio {
+  font-weight: 600;
+  color: #27ae60;
+}
+
+.fizzbizz-td-stock {
+  text-align: center;
+  font-weight: 500;
+}
+
+.fizzbizz-td-proveedor,
+.fizzbizz-td-tipo,
+.fizzbizz-td-unidad {
+  color: #7f8c8d;
+}
+
+.fizzbizz-td-acciones {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.fizzbizz-btn-editar {
+  background: linear-gradient(135deg, #4a90e2 0%, #357ab8 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 8px;
+}
+
+.fizzbizz-btn-editar:hover {
+  background: linear-gradient(135deg, #357ab8 0%, #2c5d8f 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
+}
+
+.fizzbizz-btn-eliminar {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.fizzbizz-btn-eliminar:hover {
+  background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .fizzbizz-contenedor-tabla-productos {
+    padding: 1.5rem;
+  }
+  
+  .fizzbizz-tabla-productos {
+    font-size: 0.85rem;
+  }
+  
+  .fizzbizz-fila-header th,
+  .fizzbizz-fila-producto td {
+    padding: 12px 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .fizzbizz-contenedor-tabla-productos {
+    padding: 1rem;
+    margin: 1rem;
+  }
+  
+  .fizzbizz-titulo-tabla {
+    font-size: 1.4rem;
+  }
+  
+  .fizzbizz-tabla-productos {
+    font-size: 0.8rem;
+  }
+  
+  .fizzbizz-fila-header th,
+  .fizzbizz-fila-producto td {
+    padding: 10px 6px;
+  }
+  
+  .fizzbizz-td-descripcion {
+    max-width: 120px;
+  }
+  
+  .fizzbizz-btn-editar,
+  .fizzbizz-btn-eliminar {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    margin-right: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fizzbizz-tabla-productos {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .fizzbizz-contenedor-tabla-productos {
+    padding: 0.5rem;
+  }
+  
+  .fizzbizz-titulo-tabla {
+    font-size: 1.2rem;
+  }
+}

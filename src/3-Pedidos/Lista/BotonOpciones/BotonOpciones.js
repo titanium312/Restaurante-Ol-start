@@ -140,32 +140,33 @@ function BotonOpciones({
     }
   };
 
-  const eliminarFactura = async () => {
-    if (!puedeEliminar) {
-      alert('No tienes permiso para eliminar facturas.');
-      return;
-    }
+const eliminarFactura = async () => {
+  if (!puedeEliminar) {
+    alert('No tienes permiso para eliminar facturas.');
+    return;
+  }
 
-    setLoading(true);
-    try {
-      if (!facturaId) throw new Error('ID de factura no definido');
+  setLoading(true);
+  try {
+    if (!facturaId) throw new Error('ID de factura no definido');
 
-      const confirmed = window.confirm('¿Estás seguro de que deseas eliminar esta factura?');
-      if (!confirmed) return;
+    const confirmed = window.confirm('¿Estás seguro de que deseas eliminar esta factura?');
+    if (!confirmed) return;
 
-      await api.obtenerDatos('/hotel/restaurante/Eliminar-Factura', {
-        idFactura: facturaId
-      }, 'put');
+    // Petición PUT con el ID en la URL, sin cuerpo necesario
+    await api.obtenerDatos(`/hotel/restaurante/Eliminar-Factura/${facturaId}`, {}, 'put');
 
-      if (obtenerServiciosPendientes) obtenerServiciosPendientes();
-      alert('Factura eliminada correctamente.');
-    } catch (error) {
-      console.error(error);
-      alert('Error al eliminar factura: ' + (error.response?.data?.error || error.message));
-    } finally {
-      setLoading(false);
-    }
-  };
+    if (obtenerServiciosPendientes) obtenerServiciosPendientes();
+    alert('Factura eliminada correctamente.');
+  } catch (error) {
+    console.error(error);
+    alert('Error al eliminar factura: ' + (error.response?.data?.error || error.message));
+  } finally {
+    setLoading(false);
+  }
+};
+
+
 
   const handleAction = async (option) => {
     if (!option) return;

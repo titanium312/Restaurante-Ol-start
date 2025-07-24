@@ -19,46 +19,274 @@
   flex-direction: column;
   font-weight: 600;
   color: #2d3e50;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .formulario-servicio input,
 .formulario-servicio select {
-  margin-top: 6px;
-  padding: 10px 12px;
-  border: 1px solid #ccc;
+  margin-top: 8px;
+  padding: 12px 14px;
+  border: 2px solid #e9ecef;
   border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  color: #2d3e50;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  font-family: inherit;
 }
 
 .formulario-servicio input:focus,
 .formulario-servicio select:focus {
   border-color: #4a90e2;
-  box-shadow: 0 0 4px rgba(74, 144, 226, 0.3);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
   outline: none;
+  background-color: #fafbfc;
 }
 
-.formulario-servicio button {
+.formulario-servicio input:hover,
+.formulario-servicio select:hover {
+  border-color: #357ab8;
+}
+
+.formulario-servicio select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%234a90e2' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 40px;
+  appearance: none;
+}
+
+.formulario-servicio button[type="submit"] {
   margin-top: 20px;
-  padding: 12px 20px;
-  background-color: #4a90e2;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #4a90e2 0%, #357ab8 100%);
   color: white;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   flex: 1 1 100%;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
 }
 
-.formulario-servicio button:hover {
-  background-color: #357ab8;
+.formulario-servicio button[type="submit"]:hover {
+  background: linear-gradient(135deg, #357ab8 0%, #2c5d8f 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
 }
 
-/* Responsive: 1 columna en pantallas pequeñas */
-@media (max-width: 768px) {
+.formulario-servicio button[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+}
+
+/* Fieldset de productos */
+.formulario-servicio fieldset {
+  flex: 1 1 100%;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  background-color: #fafbfc;
+  transition: border-color 0.3s ease;
+}
+
+.formulario-servicio fieldset:hover {
+  border-color: #4a90e2;
+}
+
+.formulario-servicio legend {
+  font-weight: 600;
+  color: #2d3e50;
+  padding: 0 1rem;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Estilos para productos agregados */
+.producto-item {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #4a90e2;
+  transition: all 0.3s ease;
+}
+
+.producto-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-left-color: #357ab8;
+}
+
+.producto-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.producto-nombre {
+  font-weight: 600;
+  color: #2d3e50;
+  font-size: 1rem;
+}
+
+.producto-id {
+  color: #4a90e2;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.producto-precio {
+  color: #27ae60;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.producto-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.producto-controls label {
+  flex: none;
+  color: #2d3e50;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.producto-controls input {
+  width: 80px;
+  margin-top: 0;
+  margin-left: 0.5rem;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+.subtotal {
+  color: #27ae60;
+  font-weight: 600;
+  font-size: 1rem;
+  background-color: #f0f8f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.btn-eliminar {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.btn-eliminar:hover {
+  background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+/* Estados de validación */
+.formulario-servicio input:invalid {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.formulario-servicio input:valid {
+  border-color: #27ae60;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
   .formulario-servicio label {
-    flex: 1 1 100%;
+    flex: 1 1 calc(50% - 20px); /* 2 por fila */
   }
+}
+
+@media (max-width: 768px) {
+  .formulario-servicio {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .formulario-servicio label {
+    flex: 1 1 100%; /* 1 por fila */
+  }
+  
+  .producto-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .producto-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .formulario-servicio {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  
+  .formulario-servicio fieldset {
+    padding: 1rem;
+  }
+  
+  .producto-controls input {
+    width: 60px;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.producto-item {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Estados de carga */
+.formulario-servicio button[type="submit"]:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.formulario-servicio button[type="submit"]:disabled:hover {
+  background: #95a5a6;
+  transform: none;
+  box-shadow: none;
 }

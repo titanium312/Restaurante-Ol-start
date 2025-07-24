@@ -1,0 +1,92 @@
+/* Estilos globales */
+.container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 900px;
+  }
+  
+  .header {
+    background-color: #f9e6a0;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .header-bar {
+    background-color: #f9e6a0;
+    height: 4px;
+    border-radius: 4px;
+  }
+  
+  .title {
+    margin-top: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Contenedor de formularios */
+  .form-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  /* Sección de cada formulario */
+  .form-section {
+    background-color: #e0e0e0;
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .section-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  /* Inputs y textarea */
+  .input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input:focus {
+    border-color: #f9e6a0;
+    outline: none;
+  }
+  
+  /* Botón Submit */
+  .submit-btn {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 1rem;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #b0bec5;
+    color: #fff;
+  }
+  

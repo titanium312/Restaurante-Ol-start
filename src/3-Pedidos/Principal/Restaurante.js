@@ -3,9 +3,11 @@ import styles from './Restaurante.module.css';
 import InsertarPedido from '../InsertaPedido/InsertarPedido';
 import ListaRestaurante from '../Lista/ListaRestaurante';
 import Usuario from '../Usuario/Usuario';
-import ContenedorUser from '../Usuario/admid/administrarUsuarios/AdmidUser';
+import ContenedorUser from '../Usuario/admid/administrarUsuarios/Usuarios';
 import ServiciosCrud from '../Usuario/admid/6-servicios/ServiciosCrud';
 import Portada from './PORTADA/portada';
+import ContenedorProductos from '../Usuario/admid/Inventarios/ContenedorProductos';
+
 
 const Restaurante = () => {
   // ✅ Mostrar portada inicialmente
@@ -32,6 +34,10 @@ const Restaurante = () => {
         break;
       case 'Administrar Usuarios':
         newContent = <ContenedorUser />;
+        setNavbarClass(styles.restauranteNavbarIndigo);
+        break;
+        case 'Administrar Productos':
+        newContent = <ContenedorProductos />;
         setNavbarClass(styles.restauranteNavbarIndigo);
         break;
       default:

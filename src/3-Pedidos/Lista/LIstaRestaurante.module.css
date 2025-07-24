@@ -8,6 +8,21 @@
   max-height: unset;
   overflow-y: visible;
 }
+.refreshButton {
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.refreshButton:hover {
+  background-color: #0056b3;
+}
 
 /* Contenedor del filtro con margen inferior para separar */
 .filtrosWrapper {

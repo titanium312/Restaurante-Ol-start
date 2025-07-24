@@ -1,0 +1,449 @@
+.purpleWaffle {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background-color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.purpleWaffle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: linear-gradient(to bottom, #000, #333);
+}
+
+.pinkSky {
+  position: relative;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+}
+
+.dreamLine {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, #000 0%, #000 30%, transparent 100%);
+}
+
+.almondGlow {
+  font-size: 2.2rem;
+  color: #111;
+  font-weight: 300;
+  margin: 0 0 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.milkshakeForm {
+  display: grid;
+  grid-gap: 3rem;
+}
+
+.frostedCard {
+  background-color: #fff;
+  padding: 2rem;
+  position: relative;
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
+}
+
+.frostedCard:hover {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  border-color: #ddd;
+}
+
+.chocolateMuffin {
+  font-size: 1.4rem;
+  color: #000;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid #eee;
+  position: relative;
+}
+
+.chocolateMuffin::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background-color: #000;
+}
+
+.candyLabel {
+  display: block;
+  margin-bottom: 0.6rem;
+  color: #333;
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.cookieInput {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.5rem;
+  border: none;
+  border-radius: 0;
+  font-size: 1rem;
+  background-color: #f5f5f5;
+  transition: all 0.3s;
+  border-bottom: 2px solid transparent;
+}
+
+.cookieInput:focus {
+  background-color: #f0f0f0;
+  border-bottom: 2px solid #000;
+  outline: none;
+}
+
+.cookieInput:hover {
+  background-color: #f0f0f0;
+}
+
+.jellyButton {
+  background-color: #000;
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.jellyButton::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.jellyButton:hover::after {
+  height: 100%;
+}
+
+.jellyButton:active {
+  transform: translateY(2px);
+}
+
+/* Estilos para agregar/quitar productos */
+.productActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  padding: 0.5rem 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.actionButton.add {
+  color: #333;
+}
+
+.actionButton.add::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #333;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.actionButton.add:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.actionButton.remove {
+  color: #777;
+}
+
+.actionButton.remove::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #777;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.actionButton.remove:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Estilos para productos múltiples */
+.productItem {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #f0f0f0;
+  position: relative;
+}
+
+.productItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.productItem:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 30px;
+  height: 1px;
+  background-color: #000;
+}
+
+/* Grid para campos relacionados */
+.twoColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 2rem;
+}
+
+/* Número de item */
+.itemNumber {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 25px;
+  height: 25px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+/* Etiqueta de sección */
+.sectionTag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 0.7rem;
+  color: #aaa;
+  letter-spacing: 1px;
+}
+
+/* Efectos de foco para toda la tarjeta */
+.focusable {
+  transition: all 0.3s;
+}
+
+.focusable:focus-within {
+  background-color: #fafafa;
+}
+
+/* Estilo especial para campos monetarios */
+.moneyField {
+  position: relative;
+}
+
+.moneyField::before {
+  content: '$';
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.moneyField input {
+  padding-left: 28px;
+}
+
+/* Estilo para el resumen */
+.summary {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.summaryLine {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.summaryTotal {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  font-weight: 600;
+}
+
+/* Animación sutil al cargar */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.purpleWaffle {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.frostedCard {
+  animation: fadeIn 0.6s ease-out;
+  animation-fill-mode: both;
+}
+
+.frostedCard:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .twoColumns {
+    grid-template-columns: 1fr;
+    grid-gap: 0;
+  }
+  
+  .purpleWaffle {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .almondGlow {
+    font-size: 1.8rem;
+  }
+}
+
+/* Estilos para estados de validación */
+.valid {
+  border-bottom: 2px solid #2d2d2d !important;
+}
+
+.invalid {
+  border-bottom: 2px solid #666 !important;
+}
+
+/* Tooltip de ayuda */
+.helpIcon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: #ddd;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 16px;
+  font-size: 10px;
+  margin-left: 5px;
+  cursor: pointer;
+  position: relative;
+}
+
+.helpIcon:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* Efecto de carga */
+.loader {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #333;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Estilo para el botón de tipo de factura */
+.typeSelector {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.typeOption {
+  padding: 0.7rem 1.5rem;
+  background: none;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1;
+  text-align: center;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.typeOption:first-child {
+  border-right: none;
+}
+
+.typeOption.active {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+/* Estilo para estado de botón de envío */
+.sending {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

@@ -1,0 +1,62 @@
+/* Estilos específicos para el componente FacturaServicios */
+.table-container {
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 20px;
+    background-color: #333;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    overflow: hidden;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 14px;
+    text-align: center;
+    font-size: 16px;
+  }
+  
+  th {
+    background-color: #4caf50;
+    color: #fff;
+    font-weight: 600;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #444;
+  }
+  
+  tr:hover {
+    background-color: #555;
+  }
+  
+  td {
+    border-bottom: 1px solid #555;
+  }
+  
+  .action-btn {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .action-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .table-container h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  

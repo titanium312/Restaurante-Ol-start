@@ -14,7 +14,6 @@ function ContenedorUser() {
     id_rol: "",
   });
 
-  const apiBase = "/user";
 
   useEffect(() => {
     cargarRoles();
@@ -23,7 +22,7 @@ function ContenedorUser() {
 
   const cargarRoles = async () => {
     try {
-      const data = await api.obtenerDatos(`${apiBase}/roles`);
+      const data = await api.obtenerDatos(`/user/roles`);
       setRoles(data);
     } catch (err) {
       console.error("Error al cargar roles", err);
@@ -32,8 +31,7 @@ function ContenedorUser() {
 
   const cargarUsuarios = async () => {
     try {
-      const data = await api.obtenerDatos(`${apiBase}/usuarioslista`);
-      console.log("Usuarios recibidos:", data);
+      const data = await api.obtenerDatos(`/user/usuarioslista`);
 
       if (!data || !Array.isArray(data.usuarios)) {
         setUsuarios([]);
@@ -82,9 +80,9 @@ const handleSubmit = async (e, cleanedFormData) => {
     }
 
     if (id) {
-      await api.obtenerDatos(`${apiBase}/usuarios/Edit/${id}`, payload, "PUT");
+      await api.obtenerDatos(`/user/usuarios/Edit/${id}`, payload, "PUT");
     } else {
-      await api.obtenerDatos(`${apiBase}/usuarios`, payload, "POST");
+      await api.obtenerDatos(`/user/usuarios`, payload, "POST");
     }
 
     resetForm();
@@ -119,7 +117,7 @@ const handleSubmit = async (e, cleanedFormData) => {
   const handleEliminar = async (id) => {
     if (window.confirm("¿Estás seguro de eliminar este usuario?")) {
       try {
-        await api.obtenerDatos(`${apiBase}/usuarios/Eliminar/${id}`, null, "DELETE");
+        await api.obtenerDatos(`/user/usuarios/Eliminar/${id}`, null, "DELETE");
         await cargarUsuarios();
         if (formData.id === id.toString()) resetForm();
       } catch (err) {

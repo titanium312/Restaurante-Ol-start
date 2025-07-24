@@ -15,7 +15,17 @@ const overlayStyle = {
 };
 
 const contentStyle = {
-
+  backgroundColor: "#fff",              // Fondo blanco
+  padding: "30px",                      // Espaciado interno
+  borderRadius: "12px",                 // Bordes redondeados
+  boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)", // Sombra para efecto de elevación
+  width: "90%",                         // Responsive en pantallas pequeñas
+  maxWidth: "500px",                    // Máximo ancho del modal
+  maxHeight: "80vh",                    // Altura máxima para evitar desbordes
+  overflowY: "auto",                    // Scroll si el contenido es muy alto
+  fontFamily: "'Segoe UI', sans-serif",
+  color: "#333",                        // Color de texto
+  position: "relative",                // Para posicionar elementos internos si hace falta
 };
 
 

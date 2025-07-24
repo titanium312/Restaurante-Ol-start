@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormularioServicio from './FormularioServicio/FormularioServicio';
 import { TablaServicios } from './TablaServicios/TablaServicios';
-import api from '../../../../api'; // Ajusta la ruta si es necesario
+import api from '../../../../api';
+import Actualiza from '../../../InsertaPedido/Notificada/Actuliza';
+
+const apiBase = '/hotel/restaurante';
 
 const ServiciosCrud = () => {
   const [servicios, setServicios] = useState([]);
@@ -10,105 +13,91 @@ const ServiciosCrud = () => {
     nombre: '',
     descripcion: '',
     costo: '',
-    tipo: '1'
+    tipo: '1',
   });
 
-  const apiBase = '/hotel/restaurante';
+  // Definir productosEdit que faltaba
+  const [productosEdit, setProductosEdit] = useState(null);
+  const [count, setCount] = useState(1);
 
+  // Referencia para refrescar servicios
+  const [refrescarServicios, setRefrescarServicios] = useState(null);
+
+  // Estado para forzar el remount
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Maneja el cambio en el contador
+  const handleCountChange = (newCount) => {
+    setCount(newCount);
+  };
+
+  // Función para obtener facturas
+  const fetchFacturas = () => {
+    console.log("Fetching facturas...");
+    // Llama a tu API para obtener facturas
+  };
+
+  // Efecto para manejar la actualización cuando count cambia
   useEffect(() => {
-    cargarServicios();
-  }, []);
-
-  const cargarServicios = async () => {
-    try {
-      const data = await api.obtenerDatos(`${apiBase}/ListaServicios`);
-      console.log('Datos recibidos:', data);  // Para depurar la estructura real
-
-      // Ajusta aquí la propiedad según la estructura real de la respuesta:
-      const lista = data.servicios || data.listaServicios || [];
-      setServicios(lista);
-    } catch (error) {
-      console.error('Error al cargar servicios:', error.message);
-      alert('Error al obtener la lista de servicios.');
+    console.log('Count cambió a:', count);
+    // Si count es 1, iniciar la actualización
+    if (count === 1) {
+      console.log('Cargando datos porque count es 1...');
+      fetchFacturas();
+      // Intervalo para actualizar cada 1 segundo mientras count siga siendo 1
+      const intervalId = setInterval(() => {
+        if (count === 1) {
+          fetchFacturas();
+        }
+      }, 1000);
+      return () => {
+        clearInterval(intervalId);  // Limpiar el intervalo cuando se desmonte o cambie count
+      };
     }
-  };
+  }, [count]); // Solo depende de count
 
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
-  };
+  const urlToCount = "/Hotel/restaurante/recibir-pedido";
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const id = parseInt(formData.ID_Servicio);
-    const payload = {
-      ID_Servicio: id,
-      nombre: formData.nombre,
-      descripcion: formData.descripcion,
-      costo: parseFloat(formData.costo),
-      tipo: parseInt(formData.tipo)
-    };
-
-    const existe = servicios.some(s => s.ID_Servicio === id);
-
-    try {
-      if (existe) {
-        // Usar PUT para actualizar
-        await api.obtenerDatos(`${apiBase}/ActualizarServicio/${id}`, payload, 'PUT');
-      } else {
-        // Usar POST para crear nuevo
-        await api.obtenerDatos(`${apiBase}/RegistraServicio`, payload, 'POST');
-      }
-
-      setFormData({ ID_Servicio: '', nombre: '', descripcion: '', costo: '', tipo: '1' });
-      cargarServicios();
-    } catch (error) {
-      console.error('Error al guardar servicio:', error.message);
-      alert('Error al guardar el servicio.');
+  // Función para pasar a FormularioServicio y refrescar la tabla y el componente
+  const handleServicioGuardado = () => {
+    if (typeof refrescarServicios === 'function') {
+      refrescarServicios();
     }
+    setRefreshKey(prev => prev + 1); // Fuerza el remount
   };
 
-  const editarServicio = (servicio) => {
-    setFormData({
-      ID_Servicio: servicio.ID_Servicio,
-      nombre: servicio.Nombre || servicio.nombre,
-      descripcion: servicio.Descripcion || servicio.descripcion,
-      costo: servicio.Precio || servicio.costo,
-      tipo: servicio.Tipo_Servicio === 'Bar' || servicio.tipo === 2 ? '2' : '1'
-    });
-  };
+  return (
+    <div key={refreshKey} style={{ margin: '2rem', fontFamily: 'Arial, sans-serif' }}>
+      <h1>Gestión de Servicios</h1>
+      <div>
+        <h1>Componente Principal</h1>
+        <p>Contador: {count}</p>
+        <Actualiza urlToCount={urlToCount} onCountChange={handleCountChange} />
+      </div>
 
-  const eliminarServicio = async (id) => {
-    if (window.confirm('¿Estás seguro de eliminar este servicio?')) {
-      try {
-        // Usar DELETE para eliminar
-        await api.obtenerDatos(`${apiBase}/EliminarServicio/${id}`, null, 'DELETE');
-        cargarServicios();
-      } catch (error) {
-        console.error('Error al eliminar servicio:', error.message);
-        alert('Error al eliminar el servicio. Tal vez este ya facturada este servicio');
-      }
-    }
-  };
+      <FormularioServicio
+        api={api}
+        apiBase={apiBase}
+        formData={formData}
+        setFormData={setFormData}
+        servicios={servicios}
+        setServicios={setServicios}
+        productosEdit={productosEdit}
+        setProductosEdit={setProductosEdit}
+        onServicioGuardado={handleServicioGuardado}
+      />
 
- return (
-  <div style={{ margin: '2rem', fontFamily: 'Arial, sans-serif' }}>
-    <h1>Gestión de Servicios</h1>
-
-    <FormularioServicio
-      formData={formData}
-      handleChange={handleChange}
-      handleSubmit={handleSubmit}
-    />
-
-    <TablaServicios
-      servicios={servicios}
-      editarServicio={editarServicio}
-      eliminarServicio={eliminarServicio}
-    />
-  </div>
+      <TablaServicios
+        api={api}
+        apiBase={apiBase}
+        servicios={servicios}
+        setServicios={setServicios}
+        setFormData={setFormData}
+        setProductosEdit={setProductosEdit}
+        onRefrescarServicios={setRefrescarServicios}
+      />
+    </div>
   );
-}
+};
 
 export default ServiciosCrud;
