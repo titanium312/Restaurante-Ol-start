@@ -51,6 +51,7 @@ function InsertarPedido() {
     }
   };
 
+<<<<<<< HEAD
   const buscarFactura = async () => {
     if (!facturaId || isNaN(facturaId)) {
       setMessage('Ingresa un ID de factura válido');
@@ -96,8 +97,48 @@ function InsertarPedido() {
       setFacturaBuscada(false);
     } finally {
       setLoading(false);
+=======
+const buscarFactura = async () => {
+  if (!facturaId) return alert('Ingresa un ID de factura');
+
+  try {
+    const data = await api.obtenerDatos(`/Hotel/restaurante/servicio/Recepcion-ServiciosList?idFactura=${facturaId}`);
+
+    if (!data.facturas || data.facturas.length === 0) {
+      alert('No se encontró la factura');
+      setItems([]);
+      setMesa('');
+      setFacturaBuscada(false);
+      return;
     }
-  };
+
+    const factura = data.facturas[0];
+
+    const servicios = factura.Servicios;
+    const productos = [];
+
+    for (const tipo in servicios) {
+      productos.push(...servicios[tipo].map(p => ({
+        idServicio: p.ID_Servicio,
+        nombreProducto: p.Nombre_Servicio,
+        cantidad: p.Cantidad,
+        precio: p.Precio_Unitario,
+        mesa: factura.mesa,
+      })));
+>>>>>>> 8685c3599dfa29db140bf13fb9d50348ce381631
+    }
+
+    setItems(productos);
+    setMesa(factura.mesa || '');
+    setFacturaBuscada(true);
+  } catch (err) {
+    console.error(err);
+    alert('No se pudo obtener la factura');
+    setItems([]);
+    setMesa('');
+    setFacturaBuscada(false);
+  }
+};
 
   const handleServiceSelect = service => {
     if (items.some(it => it.idServicio === service.ID_Servicio)) {
