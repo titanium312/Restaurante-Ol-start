@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import './listaRestaurante.css'; // CSS tradicional
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import Filtros from './Filtros/Filtros';
 import api, { useApiWatch } from '../../api';
 import { TablaServicios } from './TablaServicios/TablaServicios';
