@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styles from './ProductosManejo.module.css';
 import BuscadorProducto from '../../BuscadorProducto/BuscadorProducto';
+import api from '../../../../../api';
 
-function ProductosManejo({ provedores = [], metodosPago = [] }) {
+function ProductosManejo({ provedores = [], metodosPago = [], onSuccess }) {
   const [modoOperacion, setModoOperacion] = useState('compra');
   const [searchTerm, setSearchTerm] = useState('');
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
@@ -67,41 +68,58 @@ function ProductosManejo({ provedores = [], metodosPago = [] }) {
     return items.reduce((acc, item) => acc + item.cantidad * item.precioCompra, 0).toFixed(2);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (modoOperacion === 'compra' && (!proveedorId || proveedorId <= 0)) {
       alert('Ingresa un ID de proveedor válido');
       return;
     }
-
     if (items.length === 0) {
       alert('Agrega al menos un producto');
       return;
     }
 
-    const payload = {
-      productos: items.map(({ idProducto, cantidad, precioCompra }) => ({
-        idProducto,
-        cantidad,
-        precioCompra,
-      })),
-      tipoFactura: modoOperacion === 'compra' ? 1 : 2,
-      metodoPago: Number(metodoPago),
-      descuento: parseFloat(descuento),
-      adelanto: parseFloat(adelanto),
-      ...(modoOperacion === 'compra' && { proveedorId: Number(proveedorId) }),
-    };
+    const payload = modoOperacion === 'compra'
+      ? {
+          productos: items.map(({ idProducto, cantidad, precioCompra }) => ({
+            idProducto,
+            cantidad,
+            precioCompra,
+          })),
+          tipoFactura: 1,
+          metodoPago: Number(metodoPago),
+          descuento: parseFloat(descuento),
+          adelanto: parseFloat(adelanto),
+          proveedorId: Number(proveedorId),
+        }
+      : {
+          productos: items.map(({ idProducto, cantidad }) => ({
+            id_producto: idProducto,
+            cantidad,
+          })),
+          tipoFactura: 2,
+          descuento: parseFloat(descuento),
+          adelanto: parseFloat(adelanto),
+          fechaEmision: new Date().toISOString().slice(0, 10),
+        };
 
-    // Usamos payload para que eslint no se queje:
-    console.log('Payload a enviar:', payload);
+    // Determinar endpoint según el modo de operación
+    const endpoint = modoOperacion === 'compra'
+      ? '/Hotel/Productos/productos/entrada'
+      : '/Hotel/Productos/producto/sale';
 
-    // Simulación éxito
-    setItems([]);
-    setProveedorId('');
-    setDescuento('0');
-    setAdelanto('0');
-    setMetodoPago('1');
-    setMessage(modoOperacion === 'compra' ? 'Compra registrada con éxito' : 'Venta registrada con éxito');
-    alert(modoOperacion === 'compra' ? 'Compra registrada con éxito' : 'Venta registrada con éxito');
+    try {
+      await api.obtenerDatos(endpoint, payload, 'POST');
+      setItems([]);
+      setProveedorId('');
+      setDescuento('0');
+      setAdelanto('0');
+      setMetodoPago('1');
+      setMessage(modoOperacion === 'compra' ? 'Compra registrada con éxito' : 'Venta registrada con éxito');
+      alert(modoOperacion === 'compra' ? 'Compra registrada con éxito' : 'Venta registrada con éxito');
+      if (onSuccess) onSuccess();
+    } catch (error) {
+      alert('Error al registrar: ' + error.message);
+    }
   };
 
   return (

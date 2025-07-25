@@ -4,7 +4,7 @@ import styles from './FormularioProveedor.module.css'; // Ensure correct path
 import TablaProvedores from '../Tabla/TablaProvedores';
 
 
-export default function FormularioProveedor() {
+export default function FormularioProveedor({ proveedorEditado, setProveedorEditado }) {
   const [ID_Provedor, setID_Provedor] = useState('');
   const [Nombre, setNombre] = useState('');
   const [Telefono, setTelefono] = useState('');
@@ -12,7 +12,6 @@ export default function FormularioProveedor() {
   const [Direccion, setDireccion] = useState('');
   const [respuesta, setRespuesta] = useState('');
   const [cargando, setCargando] = useState(false);
-  const [proveedorEditado, setProveedorEditado] = useState(null);
 
   useEffect(() => {
     if (proveedorEditado) {
@@ -172,7 +171,7 @@ export default function FormularioProveedor() {
         </div>
       </form>
 
-      <TablaProvedores/>
+      <TablaProvedores setProveedorEditado={setProveedorEditado} proveedorEditado={proveedorEditado} />
       {respuesta && (
         <div className={`${styles.fp_mensaje} ${respuesta.startsWith('Error') ? styles.error : styles.exito}`}>
           {respuesta}

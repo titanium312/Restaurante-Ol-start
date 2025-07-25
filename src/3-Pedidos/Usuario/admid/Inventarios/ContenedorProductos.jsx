@@ -16,6 +16,7 @@ export default function ContenedorProductos() {
   const [vistaActiva, setVistaActiva] = useState("formulario");
   const [cargando, setCargando] = useState(true); // Para el estado de carga
   const [error, setError] = useState(null); // Para manejar errores en las peticiones
+  const [proveedorEditado, setProveedorEditado] = useState(null);
 
   const cargarYSetear = async (endpoint, setState) => {
     try {
@@ -99,10 +100,12 @@ export default function ContenedorProductos() {
         )}
 
         {vistaActiva === "manejo" && (
-          <ProductosManejo provedores={provedores} metodosPago={metodosPago} />
+          <ProductosManejo provedores={provedores} metodosPago={metodosPago} onSuccess={manejarExito} />
         )}
 
-        {vistaActiva === "registro" && <FormularioProveedor />}
+        {vistaActiva === "registro" && (
+          <FormularioProveedor setProveedorEditado={setProveedorEditado} proveedorEditado={proveedorEditado} />
+        )}
       </div>
 
       {/* Tabla de productos */}

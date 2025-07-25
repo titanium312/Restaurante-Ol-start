@@ -104,7 +104,6 @@ function ListaRestaurante() {
   }, []);
 
   const fetchFacturas = useCallback(() => {
-    console.log("Refrescando datos de facturas...");
     obtenerServiciosPendientes();
   }, [obtenerServiciosPendientes]);
 
@@ -139,14 +138,13 @@ function ListaRestaurante() {
 
   useEffect(() => {
     if (count === 1 && !isDataFetched) {
-      console.log('Iniciando carga automática de datos...');
+     
       fetchFacturas();
       setIsDataFetched(true);
 
       const intervalId = setInterval(fetchFacturas, INTERVAL_REFRESH);
       
       return () => {
-        console.log('Limpiando intervalo de actualización...');
         clearInterval(intervalId);
       };
     }
@@ -188,12 +186,21 @@ function ListaRestaurante() {
         <div className="cajaEstadoSection">
           <button
             onClick={toggleCajaEstado}
-            className="toggleButtontabla"
             aria-expanded={showCajaEstado}
+            style={{
+              backgroundColor: showCajaEstado ? '#0056b3' : '#007bff',
+              color: 'white',
+              border: 'none',
+              padding: '10px 20px',
+              fontSize: '1rem',
+              cursor: 'pointer',
+              borderRadius: '5px',
+              transition: 'background-color 0.3s ease',
+              userSelect: 'none',
+            }}
           >
             {showCajaEstado ? 'Ocultar Caja Estado' : 'Mostrar Caja Estado'}
           </button>
-          {showCajaEstado && <CajaEstado />}
         </div>
       )}
 
