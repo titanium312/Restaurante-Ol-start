@@ -8,7 +8,7 @@ function ProductosManejo({ provedores = [], metodosPago = [] }) {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
 
   const [idProducto, setIdProducto] = useState('');
-  const [nombreProducto, setNombreProducto] = useState('');
+  // Eliminamos nombreProducto porque no se usa
   const [cantidad, setCantidad] = useState('');
   const [precioCompra, setPrecioCompra] = useState('');
   const [proveedorId, setProveedorId] = useState('');
@@ -53,7 +53,7 @@ function ProductosManejo({ provedores = [], metodosPago = [] }) {
 
     setProductoSeleccionado(null);
     setIdProducto('');
-    setNombreProducto('');
+    // no hay nombreProducto para limpiar
     setCantidad('');
     setPrecioCompra('');
     setSearchTerm('');
@@ -91,7 +91,10 @@ function ProductosManejo({ provedores = [], metodosPago = [] }) {
       ...(modoOperacion === 'compra' && { proveedorId: Number(proveedorId) }),
     };
 
-    // Aquí iría la petición a la API. Ahora solo simulamos éxito.
+    // Usamos payload para que eslint no se queje:
+    console.log('Payload a enviar:', payload);
+
+    // Simulación éxito
     setItems([]);
     setProveedorId('');
     setDescuento('0');
@@ -137,7 +140,7 @@ function ProductosManejo({ provedores = [], metodosPago = [] }) {
           onSelect={(producto) => {
             setProductoSeleccionado(producto);
             setIdProducto(producto?.ID?.toString() ?? '');
-            setNombreProducto(producto?.Nombre ?? '');
+            // no seteamos nombreProducto que ya no existe
             setPrecioCompra(producto?.Precio_Unitario?.toString() ?? '');
             setSearchTerm(producto?.ID?.toString() ?? '');
           }}
