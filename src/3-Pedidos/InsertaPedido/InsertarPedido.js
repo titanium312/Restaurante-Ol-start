@@ -79,7 +79,7 @@ function InsertarPedido() {
             nombreProducto: servicio.Nombre_Servicio,
             cantidad: parseInt(servicio.Cantidad, 10),
             precio: parseFloat(servicio.Precio_Unitario),
-            mesa: factura.mesa
+            mesa: factura.mesa,
           });
         });
       }
@@ -114,12 +114,14 @@ function InsertarPedido() {
       setMessage('Completa todos los campos válidos');
       return;
     }
+
     const newItem = {
       idServicio,
       nombreProducto,
       cantidad: parseInt(cantidad, 10),
-      precio: parseFloat(precio)
+      precio: parseFloat(precio),
     };
+
     setItems([...items, newItem]);
     setIdServicio('');
     setNombreProducto('');
@@ -130,8 +132,7 @@ function InsertarPedido() {
   };
 
   const quitarItem = idx => {
-    const nuevosItems = items.filter((_, i) => i !== idx);
-    setItems(nuevosItems);
+    setItems(items.filter((_, i) => i !== idx));
     setMessage('Item eliminado');
   };
 
@@ -144,9 +145,8 @@ function InsertarPedido() {
     setItems(updated);
   };
 
-  const calcularTotal = () => {
-    return items.reduce((acc, it) => acc + (it.precio * it.cantidad), 0).toFixed(2);
-  };
+  const calcularTotal = () =>
+    items.reduce((acc, it) => acc + it.precio * it.cantidad, 0).toFixed(2);
 
   const handleSubmit = async () => {
     if (!mesa) {
@@ -164,7 +164,7 @@ function InsertarPedido() {
     const servicios = items.map(it => ({
       ID_Servicio: it.idServicio,
       Cantidad: it.cantidad,
-      mesa: mesa
+      mesa,
     }));
 
     const now = new Date();
@@ -178,8 +178,10 @@ function InsertarPedido() {
       ID_MetodoPago: 2,
       Descuento: 0,
       Adelanto: 0,
-      Descripsion: facturaBuscada ? 'Actualización de pedido desde sistema' : 'Pedido desde sistema',
-      servicios
+      Descripsion: facturaBuscada
+        ? 'Actualización de pedido desde sistema'
+        : 'Pedido desde sistema',
+      servicios,
     };
 
     try {
@@ -201,6 +203,7 @@ function InsertarPedido() {
     <div className="InsertarPedidoRoot">
       <div className={styles.formularioContenedor}>
         <ServicioAlerta />
+
         <h1 className={styles.tituloFormulario}>Pedido / Actualizar Factura</h1>
 
         {message && <div className={styles.mensajeAlerta}>{message}</div>}
@@ -225,10 +228,7 @@ function InsertarPedido() {
                   onChange={e => setFacturaId(e.target.value.replace(/\D/g, ''))}
                   disabled={loading}
                 />
-                <button
-                  onClick={buscarFactura}
-                  disabled={loading || !facturaId}
-                >
+                <button onClick={buscarFactura} disabled={loading || !facturaId}>
                   {loading ? 'Buscando...' : 'Buscar'}
                 </button>
                 {!facturaBuscada && (
@@ -304,7 +304,9 @@ function InsertarPedido() {
           </thead>
           <tbody>
             {items.length === 0 ? (
-              <tr><td colSpan="6">No hay items agregados</td></tr>
+              <tr>
+                <td colSpan="6">No hay items agregados</td>
+              </tr>
             ) : (
               items.map((it, idx) => (
                 <tr key={idx}>
@@ -322,10 +324,7 @@ function InsertarPedido() {
                   <td>${it.precio.toFixed(2)}</td>
                   <td>${(it.precio * it.cantidad).toFixed(2)}</td>
                   <td>
-                    <button
-                      onClick={() => quitarItem(idx)}
-                      disabled={loading}
-                    >
+                    <button onClick={() => quitarItem(idx)} disabled={loading}>
                       Quitar
                     </button>
                   </td>
@@ -342,11 +341,8 @@ function InsertarPedido() {
         )}
 
         <div className={styles.grupoBotonesAccion}>
-          <button
-            onClick={handleSubmit}
-            disabled={loading || items.length === 0 || !mesa}
-          >
-            {loading ? 'Procesando...' : (facturaBuscada ? 'Actualizar Factura' : 'Crear Factura')}
+          <button onClick={handleSubmit} disabled={loading || items.length === 0 || !mesa}>
+            {loading ? (facturaBuscada ? 'Actualizando...' : 'Procesando...') : facturaBuscada ? 'Actualizar Factura' : 'Crear Factura'}
           </button>
         </div>
       </div>

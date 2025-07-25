@@ -16,7 +16,6 @@ export default function ContenedorProductos() {
   const [vistaActiva, setVistaActiva] = useState("formulario");
   const [cargando, setCargando] = useState(true); // Para el estado de carga
   const [error, setError] = useState(null); // Para manejar errores en las peticiones
-  const [refreshTabla, setRefreshTabla] = useState(false);
 
   const cargarYSetear = async (endpoint, setState) => {
     try {

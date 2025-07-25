@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import api from '../../../../api';  
-import { useEffect, useRef } from 'react';
 
 const SaleProducto = () => {
   // Estado para manejar la lista de productos

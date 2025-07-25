@@ -4,7 +4,7 @@ import styles from './SelectProveedor.module.css'; // Suponiendo que tienes esti
 
 const SelectProveedor = ({ valueProveedor, onChangeProveedor }) => {
   const [proveedores, setProveedores] = useState([]);
-  const [loading, setLoading] = useState(true);  // Para mostrar un estado de carga
+  const [setLoading] = useState(true);  // Para mostrar un estado de carga
 
   useEffect(() => {
     const obtenerProveedores = async () => {

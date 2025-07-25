@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useApiWatch } from "../../../api"; // Importamos el hook
 
 function Actualiza({ urlToCount, onCountChange }) {
-  const [movimientos, setMovimientos] = useState([]);
+  const [setMovimientos] = useState([]);
 
   // Usamos el hook useApiWatch para escuchar el evento SSE
   useApiWatch(urlToCount, () => {

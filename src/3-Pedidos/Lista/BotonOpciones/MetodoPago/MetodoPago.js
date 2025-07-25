@@ -5,13 +5,6 @@ import styles from './MetodoPago.module.css';
 const MetodoPago = ({ onTipoSelect }) => {
   const [tiposPago, setTiposPago] = useState([]);
   const [loading, setLoading] = useState(true);
-const contentStyle = {
-
-backgroundColor: "black",
-padding: "20px",
-borderRadius: "5px",
-
-};
   useEffect(() => {
     const loadTiposPago = async () => {
       try {

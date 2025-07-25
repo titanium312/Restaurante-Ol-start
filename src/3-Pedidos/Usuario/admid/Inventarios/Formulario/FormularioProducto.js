@@ -24,7 +24,6 @@ export function FormularioProducto({
   });
 
   const [mensaje, setMensaje] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
   const [listaProveedores, setListaProveedores] = useState(provedores || []);
 
   useEffect(() => {

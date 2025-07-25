@@ -81,19 +81,9 @@ const FormularioServicio = ({
     setLoading(true);
     setError('');
 
-    const serviceData = {
-      ID_Servicio: formData.ID_Servicio,
-      Nombre: formData.nombre,
-      Descripcion: formData.descripcion,
-      Precio: parseFloat(formData.costo),
-      productos: productos.map(p => ({
-        ID_Producto: p.ID_Producto,
-        Cantidad: p.Cantidad
-      }))
-    };
+
 
     try {
-      const result = await api.obtenerDatos(`${apiBase}/RegistraServicio`, serviceData, 'POST');
 
       alert('Servicio registrado o actualizado correctamente.');
       setFormData({

@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom";
 
 const overlayStyle = {
@@ -30,7 +29,7 @@ const contentStyle = {
 
 
 
-const Modal = ({ isOpen, onClose, children }) => {
+const Modal = ({ isOpen, children }) => {
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(

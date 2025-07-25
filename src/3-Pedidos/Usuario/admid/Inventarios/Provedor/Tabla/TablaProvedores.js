@@ -7,7 +7,6 @@ export default function TablaProvedores({ setProveedorEditado, refresh }) {
   const [mensaje, setMensaje] = useState('');
   const [mensajeVisible, setMensajeVisible] = useState(false); // Controlar la visibilidad del mensaje
   const [proveedorSeleccionado, setProveedorSeleccionado] = useState(null); // Estado para el proveedor seleccionado
-  const [refreshTabla, setRefreshTabla] = useState(false);
 
   // Obtener los datos de los proveedores de la API usando axios
   useEffect(() => {

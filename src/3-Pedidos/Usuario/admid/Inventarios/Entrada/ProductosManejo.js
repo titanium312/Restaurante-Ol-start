@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import styles from './ProductosManejo.module.css';
 import BuscadorProducto from '../../BuscadorProducto/BuscadorProducto';
-import api from '../../../../../api';  
 function ProductosManejo({ provedores = [], metodosPago = [] }) {
   const [modoOperacion, setModoOperacion] = useState('compra');
   const [searchTerm, setSearchTerm] = useState('');
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
 
   const [idProducto, setIdProducto] = useState('');
-  const [nombreProducto, setNombreProducto] = useState('');
+  const [setNombreProducto] = useState('');
   const [cantidad, setCantidad] = useState('');
   const [precioCompra, setPrecioCompra] = useState('');
   const [proveedorId, setProveedorId] = useState('');
@@ -89,8 +88,6 @@ const handleSubmit = async () => {
   };
 
   try {
-    const res = await api.obtenerDatos('/Hotel/Productos/productos/entrada', payload, 'POST');
-
     // Si la respuesta contiene un mensaje de éxito
     setItems([]);
     setProveedorId('');

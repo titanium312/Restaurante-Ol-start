@@ -12,7 +12,7 @@ const RegistroProveedor = () => {
   });
 
   const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);  // Para manejar el estado de carga
+  const [ setLoading] = useState(false);  // Para manejar el estado de carga
 
   // Función para manejar los cambios en los campos del formulario
   const handleChange = (e) => {
