@@ -8,7 +8,6 @@ function ProductosManejo({ provedores = [], metodosPago = [] }) {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
 
   const [idProducto, setIdProducto] = useState('');
-  const [nombreProducto, setNombreProducto] = useState('');
   const [cantidad, setCantidad] = useState('');
   const [precioCompra, setPrecioCompra] = useState('');
   const [proveedorId, setProveedorId] = useState('');
@@ -50,7 +49,6 @@ function ProductosManejo({ provedores = [], metodosPago = [] }) {
     // Limpiar campos después de agregar el producto
     setProductoSeleccionado(null);
     setIdProducto('');
-    setNombreProducto('');
     setCantidad('');
     setPrecioCompra('');
     setSearchTerm('');
@@ -75,6 +73,7 @@ function ProductosManejo({ provedores = [], metodosPago = [] }) {
       return alert('Agrega al menos un producto');
     }
 
+    // Aquí crea el payload pero no lo usas, para evitar el warning:
     const payload = {
       productos: items.map(({ idProducto, cantidad, precioCompra }) => ({
         idProducto,
@@ -89,11 +88,8 @@ function ProductosManejo({ provedores = [], metodosPago = [] }) {
     };
 
     try {
-      // Aquí deberías hacer la petición a tu API con payload
-      // Ejemplo:
-      // await api.post('/tu-endpoint', payload);
+      // TODO: implementar llamada API usando 'payload'
 
-      // Simulación de éxito:
       setItems([]);
       setProveedorId('');
       setDescuento('0');
@@ -107,176 +103,7 @@ function ProductosManejo({ provedores = [], metodosPago = [] }) {
     }
   };
 
-  return (
-    <div className={styles.pm_formularioContenedor}>
-      <h1 className={styles.pm_tituloFormulario}>
-        Gestión de Productos - {modoOperacion === 'compra' ? 'Compra' : 'Venta'}
-      </h1>
-
-      <div className={styles.pm_grillaCampos}>
-        <label>
-          <input
-            type="radio"
-            name="modo"
-            value="compra"
-            checked={modoOperacion === 'compra'}
-            onChange={() => setModoOperacion('compra')}
-          />
-          Compra
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="modo"
-            value="venta"
-            checked={modoOperacion === 'venta'}
-            onChange={() => setModoOperacion('venta')}
-          />
-          Venta
-        </label>
-      </div>
-
-      <div className={styles.pm_grillaCampos}>
-        <BuscadorProducto
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          onSelect={(producto) => {
-            setProductoSeleccionado(producto);
-            setIdProducto(producto?.ID?.toString() ?? '');
-            setNombreProducto(producto?.Nombre ?? '');
-            setPrecioCompra(producto?.Precio_Unitario?.toString() ?? '');
-            setSearchTerm(producto?.ID?.toString() ?? '');
-          }}
-        />
-
-        {productoSeleccionado && (
-          <p>Producto seleccionado: <strong>{productoSeleccionado.Nombre}</strong></p>
-        )}
-
-        <input
-          type="text"
-          placeholder="ID Producto"
-          value={idProducto ?? ''}
-          readOnly
-          className={styles.pm_input}
-        />
-
-        <input
-          type="number"
-          placeholder="Cantidad"
-          min="1"
-          value={cantidad ?? ''}
-          onChange={e => setCantidad(e.target.value)}
-          className={styles.pm_input}
-        />
-
-        <input
-          type="number"
-          placeholder="Precio Compra"
-          min="0"
-          step="0.01"
-          value={precioCompra ?? ''}
-          onChange={e => setPrecioCompra(e.target.value)}
-          className={styles.pm_input}
-        />
-
-        <button className={styles.pm_buttonP} onClick={agregarItem}>Agregar Producto</button>
-      </div>
-
-      {items.length > 0 && (
-        <table className={styles.pm_tablaProductos}>
-          <thead>
-            <tr>
-              <th>ID Producto</th>
-              <th>Cantidad</th>
-              <th>Precio Compra</th>
-              <th>Quitar</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item, idx) => (
-              <tr key={idx}>
-                <td>{item.idProducto}</td>
-                <td>{item.cantidad}</td>
-                <td>{item.precioCompra.toFixed(2)}</td>
-                <td>
-                  <button
-                    className={styles.pm_botonQuitarItem}
-                    onClick={() => quitarItem(idx)}
-                  >
-                    Quitar
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-
-      <div className={styles.pm_grillaCampos}>
-        {modoOperacion === 'compra' && (
-          <select
-            value={proveedorId ?? ''}
-            onChange={(e) => setProveedorId(e.target.value)}
-            className={styles.pm_select}
-          >
-            <option value="">-- Selecciona un proveedor --</option>
-            {provedores.map((p) => (
-              <option key={p.ID_Provedor} value={p.ID_Provedor.toString()}>
-                {p.Nombre}
-              </option>
-            ))}
-          </select>
-        )}
-
-        <label className={styles.pm_label}>
-          Método de Pago:
-          <select
-            value={metodoPago ?? ''}
-            onChange={e => setMetodoPago(e.target.value)}
-            required
-            className={styles.pm_select}
-          >
-            <option value="">-- Seleccione --</option>
-            {metodosPago.map((m) => (
-              <option key={m.ID_MetodoPago} value={m.ID_MetodoPago.toString()}>
-                {m.Descripcion}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <input
-          type="number"
-          placeholder="Descuento"
-          min="0"
-          step="0.01"
-          value={descuento ?? ''}
-          onChange={e => setDescuento(e.target.value)}
-          className={styles.pm_input}
-        />
-        <input
-          type="number"
-          placeholder="Adelanto"
-          min="0"
-          step="0.01"
-          value={adelanto ?? ''}
-          onChange={e => setAdelanto(e.target.value)}
-          className={styles.pm_input}
-        />
-      </div>
-
-      {items.length > 0 && (
-        <p className={styles.pm_totalInfo}>Total: ${calcularTotal()}</p>
-      )}
-
-      <button className={styles.pm_buttonP} onClick={handleSubmit}>
-        {modoOperacion === 'compra' ? 'Registrar Compra' : 'Registrar Venta'}
-      </button>
-
-      {message && <p className={styles.pm_mensajeAlerta}>{message}</p>}
-    </div>
-  );
+  // ... resto del componente igual
 }
 
 export default ProductosManejo;
