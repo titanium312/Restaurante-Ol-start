@@ -1,25 +1,21 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import styles from './ListaRestaurante.module.css';
+import './ListaRestaurante.css'; // CSS tradicional
 import Filtros from './Filtros/Filtros';
 import api, { useApiWatch } from '../../api';
 import { TablaServicios } from './TablaServicios/TablaServicios';
 import CajaEstado from './Caja/Caja';
 import Actualiza from '../InsertaPedido/Notificada/Actuliza';
 
-// Constantes
-const INTERVAL_REFRESH = 1000; // 1 segundo
+const INTERVAL_REFRESH = 1000;
 const ENDPOINT_SERVICIOS = '/Hotel/restaurante/servicio/Recepcion-ServiciosList';
 const ENDPOINT_PEDIDOS = '/Hotel/restaurante/recibir-pedido';
 
-// Función auxiliar para obtener la fecha actual
 const obtenerFechaHoy = () => new Date().toISOString().split('T')[0];
 
-// Función auxiliar para transformar servicios
 const transformarServicios = (facturas) => {
   return facturas.flatMap(factura => {
     const serviciosPorFactura = [];
 
-    // Iterar cada tipo de servicio (ej. Restaurante, Bar, etc)
     Object.entries(factura.Servicios).forEach(([tipo, servicios]) => {
       servicios.forEach(servicio => {
         serviciosPorFactura.push({
@@ -41,18 +37,15 @@ const transformarServicios = (facturas) => {
   });
 };
 
-// Función auxiliar para filtrar servicios
 const aplicarFiltros = (servicios, filtros) => {
   return servicios.filter(servicio => {
     const fechaEmision = new Date(servicio.Fecha_Emision).toISOString().split('T')[0];
     
-    // Filtro de búsqueda general
     const cumpleBuscador = filtros.buscador === '' || 
       Object.values(servicio).some(val =>
         val && val.toString().toLowerCase().includes(filtros.buscador.toLowerCase())
       );
 
-    // Filtros específicos
     const cumpleFiltros = 
       (filtros.idFactura === '' || servicio.ID_Factura.toString().includes(filtros.idFactura)) &&
       (filtros.nombreServicio === '' || servicio.Nombre_Servicio.toLowerCase().includes(filtros.nombreServicio.toLowerCase())) &&
@@ -69,18 +62,15 @@ const aplicarFiltros = (servicios, filtros) => {
 };
 
 function ListaRestaurante() {
-  // Estados principales
   const [servicios, setServicios] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showCajaEstado, setShowCajaEstado] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
-  // Estados para actualización automática
   const [count, setCount] = useState(1);
   const [isDataFetched, setIsDataFetched] = useState(false);
 
-  // Filtros iniciales
   const [filters, setFilters] = useState({
     idFactura: '',
     nombreServicio: '',
@@ -95,14 +85,9 @@ function ListaRestaurante() {
     buscador: ''
   });
 
-  // Obtener rol del usuario
   const role = localStorage.getItem('role');
   const puedeVerCaja = role === 'Administrador' || role === 'Editor';
 
-  /**
-   * Función principal para obtener servicios pendientes del backend
-   * Transforma la respuesta en un array plano con información completa
-   */
   const obtenerServiciosPendientes = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -119,35 +104,24 @@ function ListaRestaurante() {
     }
   }, []);
 
-  /**
-   * Función para refrescar datos (utilizada por el intervalo)
-   */
   const fetchFacturas = useCallback(() => {
     console.log("Refrescando datos de facturas...");
     obtenerServiciosPendientes();
   }, [obtenerServiciosPendientes]);
 
-  /**
-   * Maneja el cambio en el contador del componente Actualiza
-   */
   const handleCountChange = useCallback((newCount) => {
     setCount(newCount);
   }, []);
 
-  /**
-   * Alterna la visibilidad de la caja de estado
-   */
   const toggleCajaEstado = useCallback(() => {
     setShowCajaEstado(prev => !prev);
   }, []);
 
-  // Servicios filtrados y ordenados (memoizado para optimización)
   const serviciosFiltrados = useMemo(() => {
     const filtrados = aplicarFiltros(servicios, filters);
     return filtrados.sort((a, b) => a.ID_Factura - b.ID_Factura);
   }, [servicios, filters]);
 
-  // Servicios agrupados por factura (memoizado para optimización)
   const serviciosAgrupados = useMemo(() => {
     return serviciosFiltrados.reduce((acc, servicio) => {
       if (!acc[servicio.ID_Factura]) {
@@ -158,15 +132,12 @@ function ListaRestaurante() {
     }, {});
   }, [serviciosFiltrados]);
 
-  // Hook para escuchar cambios en pedidos y refrescar automáticamente
   useApiWatch(`POST ${ENDPOINT_PEDIDOS}`, obtenerServiciosPendientes);
 
-  // Efecto para carga inicial
   useEffect(() => {
     obtenerServiciosPendientes();
   }, [obtenerServiciosPendientes]);
 
-  // Efecto para actualización automática cada segundo
   useEffect(() => {
     if (count === 1 && !isDataFetched) {
       console.log('Iniciando carga automática de datos...');
@@ -180,25 +151,24 @@ function ListaRestaurante() {
         clearInterval(intervalId);
       };
     }
-    
+
     if (count !== 1) {
       setIsDataFetched(false);
     }
   }, [count, isDataFetched, fetchFacturas]);
 
-  // Renderizado condicional para estados de carga y error
   if (loading) {
     return (
-      <div className={styles.containertabla}>
-        <p className={styles.loadingtabla}>Cargando servicios...</p>
+      <div className="containertabla">
+        <p className="loadingtabla">Cargando servicios...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className={styles.containertabla}>
-        <p className={styles.errortabla}>Error: {error}</p>
+      <div className="containertabla">
+        <p className="errortabla">Error: {error}</p>
         <button onClick={obtenerServiciosPendientes}>
           Intentar nuevamente
         </button>
@@ -207,22 +177,19 @@ function ListaRestaurante() {
   }
 
   return (
-    <div className={styles.containertabla}>
-      {/* Componente de actualización automática */}
+    <div className="containertabla">
       <Actualiza 
         urlToCount={ENDPOINT_PEDIDOS} 
         onCountChange={handleCountChange} 
       />
       
-      {/* Título principal */}
       <h2>Servicios Pendientes</h2>
 
-      {/* Caja de estado (solo para roles autorizados) */}
       {puedeVerCaja && (
-        <div className={styles.cajaEstadoSection}>
+        <div className="cajaEstadoSection">
           <button
             onClick={toggleCajaEstado}
-            className={styles.toggleButtontabla}
+            className="toggleButtontabla"
             aria-expanded={showCajaEstado}
           >
             {showCajaEstado ? 'Ocultar Caja Estado' : 'Mostrar Caja Estado'}
@@ -231,8 +198,7 @@ function ListaRestaurante() {
         </div>
       )}
 
-      {/* Sección de filtros */}
-      <div className={styles.filtrosWrappertabla}>
+      <div className="filtrosWrappertabla">
         <Filtros
           filters={filters}
           setFilters={setFilters}
@@ -241,8 +207,7 @@ function ListaRestaurante() {
         />
       </div>
 
-      {/* Tabla de servicios */}
-      <div className={styles.tablaWrappertabla}>
+      <div className="tablaWrappertabla">
         <TablaServicios
           servicios={servicios}
           groupedServicios={serviciosAgrupados}
