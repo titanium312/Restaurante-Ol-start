@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import styles from './ProductosManejo.module.css';
 import BuscadorProducto from '../../BuscadorProducto/BuscadorProducto';
+
 function ProductosManejo({ provedores = [], metodosPago = [] }) {
   const [modoOperacion, setModoOperacion] = useState('compra');
   const [searchTerm, setSearchTerm] = useState('');
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
 
   const [idProducto, setIdProducto] = useState('');
-  const [setNombreProducto] = useState('');
+  const [nombreProducto, setNombreProducto] = useState('');
   const [cantidad, setCantidad] = useState('');
   const [precioCompra, setPrecioCompra] = useState('');
   const [proveedorId, setProveedorId] = useState('');
@@ -63,45 +64,48 @@ function ProductosManejo({ provedores = [], metodosPago = [] }) {
     return items.reduce((acc, item) => acc + item.cantidad * item.precioCompra, 0).toFixed(2);
   };
 
-const handleSubmit = async () => {
-  if (modoOperacion === 'compra') {
-    if (!proveedorId || proveedorId <= 0) {
-      return alert('Ingresa un ID de proveedor válido');
+  const handleSubmit = async () => {
+    if (modoOperacion === 'compra') {
+      if (!proveedorId || proveedorId <= 0) {
+        return alert('Ingresa un ID de proveedor válido');
+      }
     }
-  }
 
-  if (items.length === 0) {
-    return alert('Agrega al menos un producto');
-  }
+    if (items.length === 0) {
+      return alert('Agrega al menos un producto');
+    }
 
-  const payload = {
-    productos: items.map(({ idProducto, cantidad, precioCompra }) => ({
-      idProducto,
-      cantidad,
-      precioCompra,
-    })),
-    tipoFactura: modoOperacion === 'compra' ? 1 : 2,
-    metodoPago: Number(metodoPago),
-    descuento: parseFloat(descuento),
-    adelanto: parseFloat(adelanto),
-    ...(modoOperacion === 'compra' && { proveedorId: Number(proveedorId) }),
+    const payload = {
+      productos: items.map(({ idProducto, cantidad, precioCompra }) => ({
+        idProducto,
+        cantidad,
+        precioCompra,
+      })),
+      tipoFactura: modoOperacion === 'compra' ? 1 : 2,
+      metodoPago: Number(metodoPago),
+      descuento: parseFloat(descuento),
+      adelanto: parseFloat(adelanto),
+      ...(modoOperacion === 'compra' && { proveedorId: Number(proveedorId) }),
+    };
+
+    try {
+      // Aquí deberías hacer la petición a tu API con payload
+      // Ejemplo:
+      // await api.post('/tu-endpoint', payload);
+
+      // Simulación de éxito:
+      setItems([]);
+      setProveedorId('');
+      setDescuento('0');
+      setAdelanto('0');
+      setMetodoPago('1');
+      setMessage(modoOperacion === 'compra' ? 'Compra registrada con éxito' : 'Venta registrada con éxito');
+      alert(modoOperacion === 'compra' ? 'Compra registrada con éxito' : 'Venta registrada con éxito');
+    } catch (error) {
+      alert('Error al registrar la operación');
+      console.error(error);
+    }
   };
-
-  try {
-    // Si la respuesta contiene un mensaje de éxito
-    setItems([]);
-    setProveedorId('');
-    setDescuento('0');
-    setAdelanto('0');
-    setMetodoPago('1');
-    setMessage(modoOperacion === 'compra' ? 'Compra registrada con éxito' : 'Venta registrada con éxito');
-    alert(modoOperacion === 'compra' ? 'Compra registrada con éxito' : 'Venta registrada con éxito');
-  } catch (error) {
-    alert('Error al registrar la operación');
-    console.error(error);
-  }
-};
-
 
   return (
     <div className={styles.pm_formularioContenedor}>
